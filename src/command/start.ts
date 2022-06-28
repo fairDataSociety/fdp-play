@@ -14,7 +14,7 @@ import { VerbosityLevel } from './root-command/logging'
 import { findBeeVersion, stripCommit } from '../utils/config-sources'
 import { DEFAULT_BLOCKCHAIN_IMAGE } from '../constants'
 
-const DEFAULT_BEE_REPO = 'ethersphere'
+const DEFAULT_BEE_REPO = 'fairdatasociety'
 
 export const ENV_ENV_PREFIX_KEY = 'FDP_PLAY_ENV_PREFIX'
 const ENV_IMAGE_PREFIX_KEY = 'FDP_PLAY_IMAGE_PREFIX'
