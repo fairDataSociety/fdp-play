@@ -1,5 +1,5 @@
 {
-  "name": "bee-factory",
+  "name": "fdp-play-builder",
   "version": "0.0.1",
   "description": "Setup Swarm Test Blockchain and arbitrary numbered Bee nodes",
   "scripts": {
@@ -20,7 +20,8 @@
   "keywords": [
     "swarm",
     "ethereum-swarm",
-    "bee-factory"
+    "bee-factory",
+    "fdp-play"
   ],
   "license": "BSD-3-Clause"
 }
