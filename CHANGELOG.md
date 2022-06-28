@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/fairDataSociety/fdp-play/compare/v1.0.0...v1.0.1) (2022-06-28)
+
+
+### Bug Fixes
+
+* package json ([#11](https://github.com/fairDataSociety/fdp-play/issues/11)) ([92bb879](https://github.com/fairDataSociety/fdp-play/commit/92bb879c8de6910f005ee338926b72a7ff74d9a4))
+
 ## 1.0.0 (2022-06-28)
 
 
