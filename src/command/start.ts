@@ -168,7 +168,7 @@ export class Start extends RootCommand implements LeafCommand {
 
     try {
       // const blockchainVersion = await docker.getBlockchainVersionFromQueenMetadata(this.beeVersion)
-      const blockchainVersion = '1.2.0'
+      const blockchainVersion = '1.2.0' // TODO make it dynamic
 
       blockchainSpinner.text = 'Starting blockchain node...'
       await docker.startBlockchainNode(blockchainVersion, dockerOptions)

@@ -4,9 +4,9 @@ import { DEFAULT_BLOCKCHAIN_CONTAINER } from '../constants'
 import { ContainerImageConflictError } from './error'
 
 export const DEFAULT_ENV_PREFIX = 'fdp-play'
-export const DEFAULT_BEE_IMAGE_PREFIX = 'bee-factory'
+export const DEFAULT_BEE_IMAGE_PREFIX = 'fdp-play'
 
-const BLOCKCHAIN_IMAGE_NAME = 'fairdatasociety/swarm-test-blockchain'
+const BLOCKCHAIN_IMAGE_NAME = 'fairdatasociety/fdp-play-blockchain'
 const QUEEN_IMAGE_NAME_SUFFIX = '-queen'
 const WORKER_IMAGE_NAME_SUFFIX = '-worker'
 const NETWORK_NAME_SUFFIX = '-network'
