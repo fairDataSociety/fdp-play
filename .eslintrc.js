@@ -1,4 +1,4 @@
-export default config = {
+module.exports = {
   extends: ['plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
   parserOptions: {
     sourceType: 'module',

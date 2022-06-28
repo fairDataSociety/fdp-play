@@ -68,7 +68,7 @@ export class Logs extends RootCommand implements LeafCommand {
       console: this.console,
       envPrefix: this.envPrefix,
       beeImagePrefix: this.beeImagePrefix,
-      blockchainImageName: this.blockchainImageName
+      blockchainImageName: this.blockchainImageName,
     })
     await docker.logs(this.container, process.stdout, this.follow, this.tail)
   }

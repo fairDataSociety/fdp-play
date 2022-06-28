@@ -113,12 +113,12 @@ export class Start extends RootCommand implements LeafCommand {
     this.beeVersion = stripCommit(this.beeVersion)
 
     const dockerOptions = await this.buildDockerOptions()
-    const docker = new Docker({ 
-      console: this.console, 
-      envPrefix: this.envPrefix, 
-      beeImagePrefix: this.beeImagePrefix, 
-      blockchainImageName: this.blockchainImageName, 
-      beeRepo: this.beeRepo
+    const docker = new Docker({
+      console: this.console,
+      envPrefix: this.envPrefix,
+      beeImagePrefix: this.beeImagePrefix,
+      blockchainImageName: this.blockchainImageName,
+      beeRepo: this.beeRepo,
     })
     const status = await docker.getAllStatus()
 

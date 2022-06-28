@@ -50,7 +50,11 @@ export interface DockerError extends Error {
 }
 
 export interface IDocker {
-  console: Logging, envPrefix: string, beeImagePrefix: string, beeRepo?: string, blockchainImageName?: string
+  console: Logging
+  envPrefix: string
+  beeImagePrefix: string
+  beeRepo?: string
+  blockchainImageName?: string
 }
 
 export class Docker {

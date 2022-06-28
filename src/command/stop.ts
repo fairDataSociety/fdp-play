@@ -51,7 +51,7 @@ export class Stop extends RootCommand implements LeafCommand {
       console: this.console,
       envPrefix: this.envPrefix,
       beeImagePrefix: this.beeImagePrefix,
-      blockchainImageName: this.blockchainImageName
+      blockchainImageName: this.blockchainImageName,
     })
 
     const dockerSpinner = ora({
