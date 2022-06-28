@@ -26,9 +26,9 @@
     "url": "https://github.com/fairDataProtocol/fdp-play.git"
   },
   "bin": {
-    "fdp-play": "./dist/src/index.js"
+    "fdp-play": "./dist/index.js"
   },
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],

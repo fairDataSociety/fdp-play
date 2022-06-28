@@ -22,7 +22,7 @@
 **Requirements:** Docker
 
 ```shell
-$ npm install -g @fairdataprotocol/fdp-play
+$ npm install -g @fairdatasociety/fdp-play
 ```
 
 ## Usage
