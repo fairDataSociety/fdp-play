@@ -1,0 +1,17 @@
+{
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "useDefineForClassFields": true
+  },
+}
