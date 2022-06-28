@@ -3,7 +3,7 @@ import Dockerode from 'dockerode'
 import crypto from 'crypto'
 
 import { run } from '../utils/run'
-import { ENV_ENV_PREFIX_KEY } from '../../src/command/start'
+import { ENV_ENV_PREFIX_KEY } from '../../src/constants'
 import { findContainer } from '../utils/docker'
 
 describe('stop command', () => {
