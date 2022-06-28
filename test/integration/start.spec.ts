@@ -3,7 +3,7 @@ import Dockerode from 'dockerode'
 import crypto from 'crypto'
 
 import { run } from '../utils/run'
-import { ENV_ENV_PREFIX_KEY } from '../../src/command/start'
+import { ENV_ENV_PREFIX_KEY } from '../../src/constants'
 import { Bee, BeeDebug, Reference } from '@ethersphere/bee-js'
 import { DockerError } from '../../src/utils/docker'
 import { findContainer, waitForUsablePostageStamp } from '../utils/docker'

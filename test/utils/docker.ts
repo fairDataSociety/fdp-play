@@ -1,5 +1,5 @@
 import Dockerode from 'dockerode'
-import { ENV_ENV_PREFIX_KEY } from '../../src/command/start'
+import { ENV_ENV_PREFIX_KEY } from '../../src/constants'
 import { BatchId, BeeDebug } from '@ethersphere/bee-js'
 
 export async function findContainer(docker: Dockerode, name: string): Promise<Dockerode.ContainerInspectInfo> {

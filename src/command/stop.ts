@@ -3,7 +3,7 @@ import { RootCommand } from './root-command'
 import { DEFAULT_ENV_PREFIX, DEFAULT_BEE_IMAGE_PREFIX, Docker } from '../utils/docker'
 import ora from 'ora'
 import { VerbosityLevel } from './root-command/logging'
-import { DEFAULT_BLOCKCHAIN_IMAGE } from '../constants'
+import { DEFAULT_BLOCKCHAIN_IMAGE, ENV_ENV_PREFIX_KEY } from '../constants'
 
 export class Stop extends RootCommand implements LeafCommand {
   public readonly name = 'stop'
@@ -14,7 +14,7 @@ export class Stop extends RootCommand implements LeafCommand {
     key: 'env-prefix',
     type: 'string',
     description: "Docker container's names prefix",
-    envKey: 'FACTORY_DOCKER_PREFIX',
+    envKey: ENV_ENV_PREFIX_KEY,
     default: DEFAULT_ENV_PREFIX,
   })
   public envPrefix!: string

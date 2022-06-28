@@ -12,11 +12,9 @@ import { waitForBlockchain, waitForQueen, waitForWorkers } from '../utils/wait'
 import ora from 'ora'
 import { VerbosityLevel } from './root-command/logging'
 import { findBeeVersion, stripCommit } from '../utils/config-sources'
-import { DEFAULT_BLOCKCHAIN_IMAGE } from '../constants'
+import { DEFAULT_BLOCKCHAIN_IMAGE, ENV_ENV_PREFIX_KEY } from '../constants'
 
 const DEFAULT_BEE_REPO = 'fairdatasociety'
-
-export const ENV_ENV_PREFIX_KEY = 'FDP_PLAY_ENV_PREFIX'
 const ENV_IMAGE_PREFIX_KEY = 'FDP_PLAY_IMAGE_PREFIX'
 const ENV_REPO_KEY = 'FDP_PLAY_DOCKER_REPO'
 const ENV_DETACH_KEY = 'FDP_PLAY_DETACH'
