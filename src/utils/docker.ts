@@ -1,6 +1,5 @@
 import Dockerode, { Container, ContainerCreateOptions } from 'dockerode'
 import { Logging } from '../command/root-command/logging'
-import { DEFAULT_BLOCKCHAIN_CONTAINER } from '../constants'
 import { ContainerImageConflictError } from './error'
 
 export const DEFAULT_ENV_PREFIX = 'fdp-play'
@@ -10,6 +9,7 @@ const BLOCKCHAIN_IMAGE_NAME = 'fairdatasociety/fdp-play-blockchain'
 const QUEEN_IMAGE_NAME_SUFFIX = '-queen'
 const WORKER_IMAGE_NAME_SUFFIX = '-worker'
 const NETWORK_NAME_SUFFIX = '-network'
+const BLOCKCHAIN_IMAGE_NAME_SUFFIX = '-blockchain'
 
 export const WORKER_COUNT = 4
 export const BLOCKCHAIN_VERSION_LABEL_KEY = 'org.ethswarm.beefactory.blockchain-version'
@@ -71,7 +71,7 @@ export class Docker {
   }
 
   private get blockchainName() {
-    return this.blockchainImageName.split('/').pop() || DEFAULT_BLOCKCHAIN_CONTAINER
+    return `${this.envPrefix}${BLOCKCHAIN_IMAGE_NAME_SUFFIX}`
   }
   private blockchainImage(blockchainVersion: string) {
     if (!this.beeRepo) throw new TypeError('Repo has to be defined!')
