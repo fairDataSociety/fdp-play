@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/fairDataSociety/fdp-play/compare/v1.0.1...v1.0.2) (2022-06-29)
+
+
+### Bug Fixes
+
+* pass blockchain image option with version ([#13](https://github.com/fairDataSociety/fdp-play/issues/13)) ([8ddaa71](https://github.com/fairDataSociety/fdp-play/commit/8ddaa710f92c17462e7a16c8a944fac5da588b77))
+
 ## [1.0.1](https://github.com/fairDataSociety/fdp-play/compare/v1.0.0...v1.0.1) (2022-06-28)
 
 
