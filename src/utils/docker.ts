@@ -73,11 +73,6 @@ export class Docker {
   private get blockchainName() {
     return `${this.envPrefix}${BLOCKCHAIN_IMAGE_NAME_SUFFIX}`
   }
-  private blockchainImage(blockchainVersion: string) {
-    if (!this.beeRepo) throw new TypeError('Repo has to be defined!')
-
-    return `${this.blockchainImageName}:${blockchainVersion}`
-  }
 
   private get queenName() {
     return `${this.envPrefix}${QUEEN_IMAGE_NAME_SUFFIX}`
@@ -117,11 +112,11 @@ export class Docker {
     }
   }
 
-  public async startBlockchainNode(blockchainVersion: string, options: RunOptions): Promise<void> {
+  public async startBlockchainNode(options: RunOptions): Promise<void> {
     if (options.fresh) await this.removeContainer(this.blockchainName)
 
     const container = await this.findOrCreateContainer(this.blockchainName, {
-      Image: this.blockchainImage(blockchainVersion),
+      Image: this.blockchainImageName,
       name: this.blockchainName,
       ExposedPorts: {
         '9545/tcp': {},
