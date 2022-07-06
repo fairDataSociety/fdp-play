@@ -21,6 +21,7 @@ const PRICE_ORACLE_ADDRESS = '0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B'
 
 export interface RunOptions {
   fresh: boolean
+  pullImage?: boolean
 }
 
 export enum ContainerType {
@@ -115,19 +116,23 @@ export class Docker {
   public async startBlockchainNode(options: RunOptions): Promise<void> {
     if (options.fresh) await this.removeContainer(this.blockchainName)
 
-    const container = await this.findOrCreateContainer(this.blockchainName, {
-      Image: this.blockchainImageName,
-      name: this.blockchainName,
-      ExposedPorts: {
-        '9545/tcp': {},
+    const container = await this.findOrCreateContainer(
+      this.blockchainName,
+      {
+        Image: this.blockchainImageName,
+        name: this.blockchainName,
+        ExposedPorts: {
+          '9545/tcp': {},
+        },
+        AttachStderr: false,
+        AttachStdout: false,
+        HostConfig: {
+          PortBindings: { '9545/tcp': [{ HostPort: '9545' }] },
+          NetworkMode: this.networkName,
+        },
       },
-      AttachStderr: false,
-      AttachStdout: false,
-      HostConfig: {
-        PortBindings: { '9545/tcp': [{ HostPort: '9545' }] },
-        NetworkMode: this.networkName,
-      },
-    })
+      options.pullImage,
+    )
 
     this.runningContainers.push(container)
     const state = await container.inspect()
@@ -143,28 +148,32 @@ export class Docker {
   public async startQueenNode(beeVersion: string, options: RunOptions): Promise<void> {
     if (options.fresh) await this.removeContainer(this.queenName)
 
-    const container = await this.findOrCreateContainer(this.queenName, {
-      Image: this.queenImage(beeVersion),
-      name: this.queenName,
-      ExposedPorts: {
-        '1633/tcp': {},
-        '1634/tcp': {},
-        '1635/tcp': {},
-      },
-      Tty: true,
-      Cmd: ['start'],
-      Env: this.createBeeEnvParameters(),
-      AttachStderr: false,
-      AttachStdout: false,
-      HostConfig: {
-        NetworkMode: this.networkName,
-        PortBindings: {
-          '1633/tcp': [{ HostPort: '1633' }],
-          '1634/tcp': [{ HostPort: '1634' }],
-          '1635/tcp': [{ HostPort: '1635' }],
+    const container = await this.findOrCreateContainer(
+      this.queenName,
+      {
+        Image: this.queenImage(beeVersion),
+        name: this.queenName,
+        ExposedPorts: {
+          '1633/tcp': {},
+          '1634/tcp': {},
+          '1635/tcp': {},
+        },
+        Tty: true,
+        Cmd: ['start'],
+        Env: this.createBeeEnvParameters(),
+        AttachStderr: false,
+        AttachStdout: false,
+        HostConfig: {
+          NetworkMode: this.networkName,
+          PortBindings: {
+            '1633/tcp': [{ HostPort: '1633' }],
+            '1634/tcp': [{ HostPort: '1634' }],
+            '1635/tcp': [{ HostPort: '1635' }],
+          },
         },
       },
-    })
+      options.pullImage,
+    )
 
     this.runningContainers.push(container)
     const state = await container.inspect()
@@ -186,27 +195,31 @@ export class Docker {
   ): Promise<void> {
     if (options.fresh) await this.removeContainer(this.workerName(workerNumber))
 
-    const container = await this.findOrCreateContainer(this.workerName(workerNumber), {
-      Image: this.workerImage(beeVersion, workerNumber),
-      name: this.workerName(workerNumber),
-      ExposedPorts: {
-        '1633/tcp': {},
-        '1634/tcp': {},
-        '1635/tcp': {},
-      },
-      Cmd: ['start'],
-      Env: this.createBeeEnvParameters(queenAddress),
-      AttachStderr: false,
-      AttachStdout: false,
-      HostConfig: {
-        NetworkMode: this.networkName,
-        PortBindings: {
-          '1633/tcp': [{ HostPort: (1633 + workerNumber * 10000).toString() }],
-          '1634/tcp': [{ HostPort: (1634 + workerNumber * 10000).toString() }],
-          '1635/tcp': [{ HostPort: (1635 + workerNumber * 10000).toString() }],
+    const container = await this.findOrCreateContainer(
+      this.workerName(workerNumber),
+      {
+        Image: this.workerImage(beeVersion, workerNumber),
+        name: this.workerName(workerNumber),
+        ExposedPorts: {
+          '1633/tcp': {},
+          '1634/tcp': {},
+          '1635/tcp': {},
+        },
+        Cmd: ['start'],
+        Env: this.createBeeEnvParameters(queenAddress),
+        AttachStderr: false,
+        AttachStdout: false,
+        HostConfig: {
+          NetworkMode: this.networkName,
+          PortBindings: {
+            '1633/tcp': [{ HostPort: (1633 + workerNumber * 10000).toString() }],
+            '1634/tcp': [{ HostPort: (1634 + workerNumber * 10000).toString() }],
+            '1635/tcp': [{ HostPort: (1635 + workerNumber * 10000).toString() }],
+          },
         },
       },
-    })
+      options.pullImage,
+    )
 
     this.runningContainers.push(container)
     const state = await container.inspect()
@@ -309,7 +322,11 @@ export class Docker {
     await container.remove({ v: true, force: true })
   }
 
-  private async findOrCreateContainer(name: string, createOptions: ContainerCreateOptions): Promise<Container> {
+  private async findOrCreateContainer(
+    name: string,
+    createOptions: ContainerCreateOptions,
+    pullImage = false,
+  ): Promise<Container> {
     const { container, image: foundImage } = await this.findContainer(name)
 
     if (container) {
@@ -329,6 +346,11 @@ export class Docker {
     this.console.info(`Container with name "${name}" not found. Creating new one.`)
 
     try {
+      // if the image label is 'latest' then it tries to pull the new version of it
+      if (createOptions.Image && pullImage) {
+        await this.docker.pull(createOptions.Image)
+      }
+
       return await this.docker.createContainer(createOptions)
     } catch (e) {
       // 404 is Image Not Found ==> pull the image
@@ -422,5 +444,13 @@ export class Docker {
 
       return previous
     }, [])
+  }
+
+  private imageIsLatest(image: string): boolean {
+    const imageSplit = image.split(':')
+
+    if (imageSplit.length === 1 || imageSplit[1] === 'latest') return true
+
+    return false
   }
 }

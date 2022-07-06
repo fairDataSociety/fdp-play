@@ -28,11 +28,17 @@ $ npm install -g @fairdatasociety/fdp-play
 ## Usage
 
 ```shell
-# This spins up the cluster for specific Bee version and exits
-$ fdp-play start --detach 1.6.1
+# Listing of available commands and print help menu
+$ fdp-play --help
 
-# The spins up the cluster using Bee version configured in external places. See bellow for options where to place it.
+# The spins up the cluster using the latest supported Bee version.
 $ fdp-play start --detach
+
+# This spins up the cluster for specific Bee version and exits
+$ fdp-play start -d --bee-version 1.6.1
+
+# This will clean the containers before start (fresh) and tries to pull the latest images from the Docker repository (pull)
+$ fdp-play start --pull --fresh
 
 # The spins up the cluster using specific blockchain image.
 # NOTE: The fairdatasociety/fdp-play-blockchain is the base blockchain image that only contains pre-funded accounts for Bee nodes.
@@ -47,29 +53,15 @@ $ fdp-play stop
 
 # You can also spin up the cluster without the --detach which then directly
 # attaches to the Queen logs and the cluster is terminated upon SIGINT (Ctrl+C)
-$ fdp-play start 1.6.1
+$ fdp-play start
 ```
 
 For more details see the `--help` page of the CLI and its commands.
 
-### External Bee version configuration
-
-You can omit the Bee version argument when running `fdp-play start` command if you specify it in one of the expected places:
-
- - `package.json` placed in current working directory (cwd) under the `engines.bee` property.
- - `.beefactory.json` placed in current working directory (cwd) with property `version`.
-
 ### Docker Images
 
 Bee Factory as the NPM package that you can install, like mentioned above, works in a way that it orchestrates launching FDP Play Docker images
-in correct order and awaits for certain initializations to happen in correct form. These Docker images are automatically built with our CI
-upon every new Bee release, so you can just specify which version you want to run (starting with `1.6.1` version) as part of the `start` command.
-
-#### Latest versions
-
-There is special Bee Factory image tag `latest` that has the latest Bee's master build.
-It is not recommended using this tag unless you need to test some upcoming feature and know what are you doing.
-There is high chance that there might be some change in Bee that is not compatible with current Bee Factory and so it might not even work.
+in correct order and awaits for certain initializations to happen in correct form.
 
 ## Contribute
 

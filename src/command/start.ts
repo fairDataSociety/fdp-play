@@ -1,4 +1,4 @@
-import { Argument, LeafCommand, Option } from 'furious-commander'
+import { LeafCommand, Option } from 'furious-commander'
 import { RootCommand } from './root-command'
 import {
   ContainerType,
@@ -11,7 +11,7 @@ import {
 import { waitForBlockchain, waitForQueen, waitForWorkers } from '../utils/wait'
 import ora from 'ora'
 import { VerbosityLevel } from './root-command/logging'
-import { findBeeVersion, stripCommit } from '../utils/config-sources'
+import { stripCommit } from '../utils/config-sources'
 import { DEFAULT_BLOCKCHAIN_IMAGE, ENV_ENV_PREFIX_KEY } from '../constants'
 
 const DEFAULT_BEE_REPO = 'fairdatasociety'
@@ -35,6 +35,14 @@ export class Start extends RootCommand implements LeafCommand {
     default: false,
   })
   public fresh!: boolean
+
+  @Option({
+    key: 'pull',
+    type: 'boolean',
+    description: 'The Docker images will be pulled from the Docker repository',
+    default: false,
+  })
+  public pullImage!: boolean
 
   @Option({
     key: 'detach',
@@ -92,7 +100,7 @@ export class Start extends RootCommand implements LeafCommand {
   })
   public envPrefix!: string
 
-  @Argument({ key: 'bee-version', description: 'Bee image version', required: false })
+  @Option({ key: 'bee-version', description: 'Bee image version', required: false })
   public beeVersion!: string
 
   public async run(): Promise<void> {
@@ -103,9 +111,8 @@ export class Start extends RootCommand implements LeafCommand {
     }
 
     if (!this.beeVersion) {
-      this.beeVersion = await findBeeVersion()
-      this.console.info('Bee version not specified. Found it configured externally.')
-      this.console.info(`Spinning up cluster with Bee version ${this.beeVersion}.`)
+      this.beeVersion = 'latest'
+      this.console.info('Bee version not specified. Using image with the latest tag')
     }
 
     this.beeVersion = stripCommit(this.beeVersion)
@@ -237,9 +244,10 @@ export class Start extends RootCommand implements LeafCommand {
     dockerSpinner.stop()
   }
 
-  private async buildDockerOptions(): Promise<RunOptions> {
+  private buildDockerOptions(): RunOptions {
     return {
       fresh: this.fresh,
+      pullImage: this.pullImage,
     }
   }
 }
