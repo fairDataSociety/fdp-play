@@ -103,6 +103,15 @@ export class Start extends RootCommand implements LeafCommand {
   @Option({ key: 'bee-version', description: 'Bee image version', required: false })
   public beeVersion!: string
 
+  @Option({
+    key: 'without-bees',
+    type: 'boolean',
+    description: 'Start environment without Bee clients',
+    required: false,
+    default: false,
+  })
+  public withoutBees!: boolean
+
   public async run(): Promise<void> {
     await super.init()
 
@@ -117,7 +126,7 @@ export class Start extends RootCommand implements LeafCommand {
 
     this.beeVersion = stripCommit(this.beeVersion)
 
-    const dockerOptions = await this.buildDockerOptions()
+    const dockerOptions = this.buildDockerOptions()
     const docker = new Docker({
       console: this.console,
       envPrefix: this.envPrefix,
@@ -181,6 +190,14 @@ export class Start extends RootCommand implements LeafCommand {
       blockchainSpinner.fail(`It was not possible to start blockchain node!`)
       await this.stopDocker(docker)
       throw e
+    }
+
+    if (this.withoutBees) {
+      if (!this.detach) {
+        await docker.logs(ContainerType.BLOCKCHAIN, process.stdout, true)
+      }
+
+      return
     }
 
     const queenSpinner = ora({
