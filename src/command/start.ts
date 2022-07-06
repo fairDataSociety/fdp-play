@@ -112,6 +112,15 @@ export class Start extends RootCommand implements LeafCommand {
   })
   public withoutBees!: boolean
 
+  @Option({
+    key: 'fairos',
+    type: 'boolean',
+    description: 'Start FairOS instance',
+    required: false,
+    default: false,
+  })
+  public fairos!: boolean
+
   public async run(): Promise<void> {
     await super.init()
 
@@ -241,6 +250,32 @@ export class Start extends RootCommand implements LeafCommand {
         await this.stopDocker(docker)
         throw e
       }
+    }
+
+    // start FairOS instance
+    if (this.fairos) {
+      const workerSpinner = ora({
+        text: 'Starting FairOS node...',
+        spinner: 'point',
+        color: 'yellow',
+        isSilent: this.verbosity === VerbosityLevel.Quiet,
+      }).start()
+
+      try {
+        await docker.startFairOs(dockerOptions)
+
+        workerSpinner.succeed('FairOS node is up and listening')
+      } catch (e) {
+        workerSpinner.fail(`It was not possible to start FairOS node!`)
+        await this.stopDocker(docker)
+        throw e
+      }
+
+      if (!this.detach) {
+        await docker.logs(ContainerType.FAIROS, process.stdout, true)
+      }
+
+      return
     }
 
     if (!this.detach) {

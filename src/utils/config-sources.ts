@@ -1,7 +1,3 @@
-import { readFile as readFileCb } from 'fs'
-import { promisify } from 'util'
-
-const readFile = promisify(readFileCb)
 const VERSION_REGEX = /^\d\.\d\.\d(-\w+)*$/
 
 export function stripCommit(version: string): string {
