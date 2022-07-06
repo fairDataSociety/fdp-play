@@ -1,6 +1,6 @@
 on:
   repository_dispatch:
-    types: [ build-images ]
+    types: [build-images]
   workflow_dispatch:
     inputs:
       buildImage:
@@ -13,20 +13,16 @@ on:
         description: 'The official bee image tag that the image will be built on. Default: last supported version'
         default: 'latest'
       beeVersionAsCommitHash:
-        description: 'The beeVersion parameter will be interpreted as a source code commit hash that the bee base image will be built on'
+        description:
+          'The beeVersion parameter will be interpreted as a source code commit hash that the bee base image will be
+          built on'
         default: 'false'
       stateCommit:
         description: 'The images will have cheques by the traffic generation'
         default: 'false'
-  push:
-    branches:
-      - 'master'
-  pull_request:
-    branches:
-      - '**'
 
 env:
-  BEE_IMAGE_PREFIX: 'ethersphere'
+  BEE_IMAGE_PREFIX: 'fairdatasociety'
   BUILD_IMAGE: 'false'
   COMMIT_VERSION_TAG: 'false'
   STATE_COMMIT: 'true'
@@ -67,7 +63,8 @@ jobs:
           fi
 
       - name: Auth to Docker Hub
-        if: ${{ github.event_name == 'repository_dispatch' || (github.event.inputs.buildImage == 'true' && success())  }}
+        if:
+          ${{ github.event_name == 'repository_dispatch' || (github.event.inputs.buildImage == 'true' && success())  }}
         run: |
           echo "PUSH_IMAGES=1" >> $GITHUB_ENV
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
@@ -94,32 +91,3 @@ jobs:
             BUILD_PARAMS+=" --gen-traffic"
           fi
           npm run build:env -- $BUILD_PARAMS
-
-      - name: Update bee version in package.json
-        uses: jossef/action-set-json-field@v1
-        if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.tag != 'latest' }}
-        with:
-          file: package.json
-          field: engines.bee
-          value: ${{ env.BEE_VERSION }}
-
-      - name: Create/update PR
-        if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.tag != 'latest' }}
-        uses: gr2m/create-or-update-pull-request-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_GHA_PAT }}
-        with:
-          title: "chore: update to bee ${{ env.BEE_VERSION }}"
-          body: "Updated Bee version ${{ env.BEE_VERSION }}"
-          branch: "bee-${{ env.BEE_VERSION }}"
-          commit-message: "chore: update to new bee"
-          author: "bee-worker <bee-worker@ethswarm.org>"
-
-      - name: Trigger Bee-js PR creation
-        if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.tag != 'latest' }}
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_GHA_PAT }}
-          repository: ethersphere/bee-js
-          event-type: update-bee
-          client-payload: '{"imageVersion": "${{ steps.build.outputs.full-version }}", "apiVersion": "${{ steps.build.outputs.api-version }}", "debugApiVersion": "${{ steps.build.outputs.debug-api-version }}"}'
