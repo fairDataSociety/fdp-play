@@ -37,6 +37,9 @@ $ fdp-play start --detach
 # This spins up the cluster for specific Bee version and exits
 $ fdp-play start -d --bee-version 1.6.1
 
+# This spins up the environment without Bee nodes
+$ fdp-play start --without-bees
+
 # This will clean the containers before start (fresh) and tries to pull the latest images from the Docker repository (pull)
 $ fdp-play start --pull --fresh
 

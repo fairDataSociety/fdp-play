@@ -64,6 +64,27 @@ describe('start command', () => {
     }),
   )
 
+  describe('should start cluster without bee nodes', () => {
+    beforeAll(async () => {
+      await run(['stop', '--rm']) // Cleanup the testing containers
+    })
+
+    it(
+      '',
+      wrapper(async () => {
+        // As spinning the cluster with --detach the command will exit once the cluster is up and running
+        await run(['start', '--without-bees'])
+
+        await expect(findContainer(docker, 'blockchain')).resolves.toBeDefined()
+        await expect(findContainer(docker, 'queen')).rejects.toHaveProperty('statusCode', 404)
+        await expect(findContainer(docker, 'worker-1')).rejects.toHaveProperty('statusCode', 404)
+        await expect(findContainer(docker, 'worker-2')).rejects.toHaveProperty('statusCode', 404)
+        await expect(findContainer(docker, 'worker-3')).rejects.toHaveProperty('statusCode', 404)
+        await expect(findContainer(docker, 'worker-4')).rejects.toHaveProperty('statusCode', 404)
+      }),
+    )
+  })
+
   describe('should start cluster with just few workers', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers
