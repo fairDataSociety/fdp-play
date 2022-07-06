@@ -34,6 +34,10 @@ $ fdp-play start --detach 1.6.1
 # The spins up the cluster using Bee version configured in external places. See bellow for options where to place it.
 $ fdp-play start --detach
 
+# The spins up the cluster using specific blockchain image.
+# NOTE: The fairdatasociety/fdp-play-blockchain is the base blockchain image that only contains pre-funded accounts for Bee nodes.
+$ fdp-play start --detach --blockchain-image fairdatasociety/fdp-play-blockchain
+
 # This attaches to the Queen container and displays its logs
 $ fdp-play logs queen --follow
 
