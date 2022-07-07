@@ -20,14 +20,18 @@ on:
       stateCommit:
         description: 'The images will have cheques by the traffic generation'
         default: 'false'
+      latest:
+        description: 'The images will be tagged with latest as well'
+        default: 'false'
 
 env:
   BEE_IMAGE_PREFIX: 'fairdatasociety'
   BUILD_IMAGE: 'false'
   COMMIT_VERSION_TAG: 'false'
-  STATE_COMMIT: 'true'
+  STATE_COMMIT: 'false'
   BEE_VERSION: '${{ github.event.client_payload.tag }}'
   BEE_PLATFORM: 'linux/amd64,linux/arm64,linux/arm/v7'
+  LATEST: 'false'
 
 jobs:
   bee-images:
@@ -58,6 +62,7 @@ jobs:
             echo "BUILD_IMAGE=${{ github.event.inputs.beeVersionAsCommitHash }}" >> $GITHUB_ENV
             echo "COMMIT_VERSION_TAG=${{ github.event.inputs.commitVersionTag }}" >> $GITHUB_ENV
             echo "STATE_COMMIT=${{ github.event.inputs.stateCommit }}" >> $GITHUB_ENV
+            echo "LATEST=${{ github.event.inputs.latest }}" >> $GITHUB_ENV
           else
             echo "BEE_VERSION=${BEE_VERSION/v}" >> $GITHUB_ENV
           fi
@@ -90,4 +95,20 @@ jobs:
           if [ $STATE_COMMIT == 'true' ] ; then
             BUILD_PARAMS+=" --gen-traffic"
           fi
-          npm run build:env -- $BUILD_PARAMS
+          if [ $BUILD_PARAMS != "" ] ; then
+            BUILD_PARAMS="-- $BUILD_PARAMS"
+          fi
+          npm run build:env $BUILD_PARAMS
+
+      - name: Release images
+        id: release
+        run: |
+          cd ./generator
+          PUBLISH_PARAMS=""
+          if [ $LATEST == 'true' ] ; then
+            PUBLISH_PARAMS+=" --latest"
+          fi
+          if [ $PUBLISH_PARAMS != "" ] ; then
+            PUBLISH_PARAMS="-- $PUBLISH_PARAMS"
+          fi
+          npm run publish:env $PUBLISH_PARAMS
