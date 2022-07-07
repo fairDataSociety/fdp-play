@@ -8,5 +8,5 @@ export const printer: Printer = {
   printHeading: (text: string) => SwarmPrinter.log(chalk.bold('█ ' + text)),
   formatDim: (text: string) => chalk.dim(text),
   formatImportant: (text: string) => chalk.bold(text),
-  getGenericErrorMessage: () => 'Failed to run command!',
+  getGenericErrorMessage: () => 'Failed to run command! Check if docker daemon is running.',
 }
