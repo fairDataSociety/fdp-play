@@ -1,7 +1,7 @@
 # FDP Play
 
-[![Tests](https://github.com/fairDataProtocol/fdp-play/actions/workflows/test.yaml/badge.svg)](https://github.com/fairDataProtocol/fdp-play/actions/workflows/test.yaml)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FfairDataProtocol%2Ffdp-play.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%fairDataProtocol%fdp-play?ref=badge_shield)
+[![Tests](https://github.com/fairDataSociety/fdp-play/actions/workflows/test.yaml/badge.svg)](https://github.com/fairDataSociety/fdp-play/actions/workflows/test.yaml)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FfairDataSociety%2Ffdp-play.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%fairDataSociety%fdp-play?ref=badge_shield)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 ![](https://img.shields.io/badge/npm-%3E%3D6.9.0-orange.svg?style=flat-square)
 ![](https://img.shields.io/badge/Node.js-%3E%3D12.0.0-orange.svg?style=flat-square)
@@ -73,7 +73,7 @@ in correct order and awaits for certain initializations to happen in correct for
 
 There are some ways you can make this module better:
 
-- Consult our [open issues](https://github.com/fairDataProtocol/fdp-play/issues) and take on one of them
+- Consult our [open issues](https://github.com/fairDataSociety/fdp-play/issues) and take on one of them
 - Help our tests reach 100% coverage!
 - Join us in our [Discord chat](https://discord.gg/C9DDaJ9v) in the #fdp-general channel if you have questions or want to give feedback
 

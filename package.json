@@ -16,14 +16,14 @@
     "fdp-play",
     "fdp-playground"
   ],
-  "homepage": "https://github.com/fairDataProtocol/fdp-play",
+  "homepage": "https://github.com/fairDataSociety/fdp-play",
   "bugs": {
-    "url": "https://github.com/fairDataProtocol/fdp-play/issues/"
+    "url": "https://github.com/fairDataSociety/fdp-play/issues/"
   },
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fairDataProtocol/fdp-play.git"
+    "url": "https://github.com/fairDataSociety/fdp-play.git"
   },
   "bin": {
     "fdp-play": "./dist/index.js"
