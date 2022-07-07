@@ -1,5 +1,7 @@
+import { BeeDebug } from '@ethersphere/bee-js'
 import Dockerode, { Container, ContainerCreateOptions } from 'dockerode'
 import { Logging } from '../command/root-command/logging'
+import { DEFAULT_FAIROS_IMAGE } from '../constants'
 import { ContainerImageConflictError } from './error'
 
 export const DEFAULT_ENV_PREFIX = 'fdp-play'
@@ -10,6 +12,7 @@ const QUEEN_IMAGE_NAME_SUFFIX = '-queen'
 const WORKER_IMAGE_NAME_SUFFIX = '-worker'
 const NETWORK_NAME_SUFFIX = '-network'
 const BLOCKCHAIN_IMAGE_NAME_SUFFIX = '-blockchain'
+const FAIROS_NAME_SUFFIX = '-fairos'
 
 export const WORKER_COUNT = 4
 export const BLOCKCHAIN_VERSION_LABEL_KEY = 'org.ethswarm.beefactory.blockchain-version'
@@ -31,6 +34,7 @@ export enum ContainerType {
   WORKER_2 = 'worker2',
   WORKER_3 = 'worker3',
   WORKER_4 = 'worker4',
+  FAIROS = 'fairos',
 }
 
 export type Status = 'running' | 'exists' | 'not-found'
@@ -56,6 +60,8 @@ export interface IDocker {
   beeImagePrefix: string
   beeRepo?: string
   blockchainImageName?: string
+  fairOsImage?: string
+  fairOsPostageBatchId?: string
 }
 
 export class Docker {
@@ -66,6 +72,8 @@ export class Docker {
   private beeImagePrefix: string
   private blockchainImageName: string
   private beeRepo?: string
+  private fairOsImage: string
+  private fairOsPostageBatchId?: string
 
   private get networkName() {
     return `${this.envPrefix}${NETWORK_NAME_SUFFIX}`
@@ -77,6 +85,10 @@ export class Docker {
 
   private get queenName() {
     return `${this.envPrefix}${QUEEN_IMAGE_NAME_SUFFIX}`
+  }
+
+  private get fairOsName() {
+    return `${this.envPrefix}${FAIROS_NAME_SUFFIX}`
   }
 
   private queenImage(beeVersion: string) {
@@ -95,7 +107,15 @@ export class Docker {
     return `${this.beeRepo}/${this.beeImagePrefix}${WORKER_IMAGE_NAME_SUFFIX}-${workerNumber}:${beeVersion}`
   }
 
-  constructor({ console, envPrefix, beeImagePrefix, blockchainImageName, beeRepo }: IDocker) {
+  constructor({
+    console,
+    envPrefix,
+    beeImagePrefix,
+    blockchainImageName,
+    beeRepo,
+    fairOsImage,
+    fairOsPostageBatchId,
+  }: IDocker) {
     this.docker = new Dockerode()
     this.console = console
     this.runningContainers = []
@@ -103,6 +123,8 @@ export class Docker {
     this.beeImagePrefix = beeImagePrefix
     this.blockchainImageName = blockchainImageName || BLOCKCHAIN_IMAGE_NAME
     this.beeRepo = beeRepo
+    this.fairOsImage = fairOsImage || DEFAULT_FAIROS_IMAGE
+    this.fairOsPostageBatchId = fairOsPostageBatchId
   }
 
   public async createNetwork(): Promise<void> {
@@ -142,6 +164,40 @@ export class Docker {
       await container.start()
     } else {
       this.console.info('The blockchain container was already running, so not starting it again.')
+    }
+  }
+
+  public async startFairOs(options: RunOptions): Promise<void> {
+    if (options.fresh) await this.removeContainer(this.fairOsName)
+
+    const fairOsCmdParams = await this.createFairOsCmdParams()
+    const container = await this.findOrCreateContainer(
+      this.fairOsName,
+      {
+        Image: this.fairOsImage,
+        name: this.fairOsName,
+        Cmd: ['server', ...fairOsCmdParams],
+        ExposedPorts: {
+          '9090/tcp': {},
+        },
+        AttachStderr: false,
+        AttachStdout: false,
+        HostConfig: {
+          PortBindings: { '9090/tcp': [{ HostPort: '9090' }] },
+          NetworkMode: this.networkName,
+        },
+      },
+      options.pullImage,
+    )
+
+    this.runningContainers.push(container)
+    const state = await container.inspect()
+
+    // If it is already running (because of whatever reason) we are not spawning new node
+    if (!state.State.Running) {
+      await container.start()
+    } else {
+      this.console.info('The FairOS container was already running, so not starting it again.')
     }
   }
 
@@ -410,6 +466,8 @@ export class Docker {
         return this.workerName(3)
       case ContainerType.WORKER_4:
         return this.workerName(4)
+      case ContainerType.FAIROS:
+        return this.fairOsName
       default:
         throw new Error('Unknown container!')
     }
@@ -446,11 +504,25 @@ export class Docker {
     }, [])
   }
 
-  private imageIsLatest(image: string): boolean {
-    const imageSplit = image.split(':')
+  private async createFairOsCmdParams(): Promise<string[]> {
+    const batchId = this.fairOsPostageBatchId || (await this.createPostageBatch())
+    const corsOrigins = '*'
+    const cookieDomain = 'localhost'
+    const beeApiUrl = `http://${this.queenName}:1633`
+    const beeDebugApiUrl = `http://${this.queenName}:1635`
 
-    if (imageSplit.length === 1 || imageSplit[1] === 'latest') return true
+    return [
+      `--postageBlockId=${batchId}`,
+      `--cors-origins=${corsOrigins}`,
+      `--beeApi=${beeApiUrl}`,
+      `--beeDebugApi=${beeDebugApiUrl}`,
+      `--cookieDomain=${cookieDomain}`,
+    ]
+  }
 
-    return false
+  private async createPostageBatch(): Promise<string> {
+    const beeDebug = new BeeDebug('http://localhost:1635')
+
+    return beeDebug.createPostageBatch('10000000000', 21)
   }
 }

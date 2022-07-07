@@ -85,6 +85,27 @@ describe('start command', () => {
     )
   })
 
+  describe('should start cluster with fairos node', () => {
+    beforeAll(async () => {
+      await run(['stop', '--rm']) // Cleanup the testing containers
+    })
+
+    it(
+      '',
+      wrapper(async () => {
+        // As spinning the cluster with --detach the command will exit once the cluster is up and running
+        await run(['start', '--fairos'])
+
+        await expect(findContainer(docker, 'blockchain')).resolves.toBeDefined()
+        await expect(findContainer(docker, 'worker-1')).resolves.toBeDefined()
+        await expect(findContainer(docker, 'worker-2')).resolves.toBeDefined()
+        await expect(findContainer(docker, 'worker-3')).resolves.toBeDefined()
+        await expect(findContainer(docker, 'worker-4')).resolves.toBeDefined()
+        await expect(findContainer(docker, 'fairos')).resolves.toBeDefined()
+      }),
+    )
+  })
+
   describe('should start cluster with just few workers', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers

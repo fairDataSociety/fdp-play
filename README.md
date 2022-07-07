@@ -40,6 +40,9 @@ $ fdp-play start -d --bee-version 1.6.1
 # This spins up the environment without Bee nodes
 $ fdp-play start --without-bees
 
+# Or start a fairOS instance that will use the Queen Bee node.
+$ fdp-play start --fairos
+
 # This will clean the containers before start (fresh) and tries to pull the latest images from the Docker repository (pull)
 $ fdp-play start --pull --fresh
 

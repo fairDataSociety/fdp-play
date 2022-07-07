@@ -12,7 +12,7 @@ import { waitForBlockchain, waitForQueen, waitForWorkers } from '../utils/wait'
 import ora from 'ora'
 import { VerbosityLevel } from './root-command/logging'
 import { stripCommit } from '../utils/config-sources'
-import { DEFAULT_BLOCKCHAIN_IMAGE, ENV_ENV_PREFIX_KEY } from '../constants'
+import { DEFAULT_BLOCKCHAIN_IMAGE, DEFAULT_FAIROS_IMAGE, ENV_ENV_PREFIX_KEY } from '../constants'
 
 const DEFAULT_BEE_REPO = 'fairdatasociety'
 const ENV_IMAGE_PREFIX_KEY = 'FDP_PLAY_IMAGE_PREFIX'
@@ -112,6 +112,18 @@ export class Start extends RootCommand implements LeafCommand {
   })
   public withoutBees!: boolean
 
+  @Option({
+    key: 'fairos',
+    type: 'boolean',
+    description: 'Start FairOS instance',
+    required: false,
+    default: false,
+  })
+  public fairos!: boolean
+
+  @Option({ key: 'fairos-image', description: 'FairOS Docker image', required: false, default: DEFAULT_FAIROS_IMAGE })
+  public fairosImage!: string
+
   public async run(): Promise<void> {
     await super.init()
 
@@ -133,6 +145,7 @@ export class Start extends RootCommand implements LeafCommand {
       beeImagePrefix: this.beeImagePrefix,
       blockchainImageName: this.blockchainImageName,
       beeRepo: this.beeRepo,
+      fairOsImage: this.fairosImage,
     })
     const status = await docker.getAllStatus()
 
@@ -241,6 +254,32 @@ export class Start extends RootCommand implements LeafCommand {
         await this.stopDocker(docker)
         throw e
       }
+    }
+
+    // start FairOS instance
+    if (this.fairos) {
+      const workerSpinner = ora({
+        text: 'Starting FairOS node...',
+        spinner: 'point',
+        color: 'yellow',
+        isSilent: this.verbosity === VerbosityLevel.Quiet,
+      }).start()
+
+      try {
+        await docker.startFairOs(dockerOptions)
+
+        workerSpinner.succeed('FairOS node is up and listening')
+      } catch (e) {
+        workerSpinner.fail(`It was not possible to start FairOS node!`)
+        await this.stopDocker(docker)
+        throw e
+      }
+
+      if (!this.detach) {
+        await docker.logs(ContainerType.FAIROS, process.stdout, true)
+      }
+
+      return
     }
 
     if (!this.detach) {
