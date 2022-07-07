@@ -60,7 +60,6 @@ fi
 
 if [ "$STATE_COMMIT" == 'false'  ] ; then
   echo "The bee image will be built without their state"
-  BEE_VERSION+="-stateless"
   "$MY_PATH/utils/build-image-tag.sh" set "$BEE_VERSION"
   echo "Stateless Bee version: $BEE_VERSION"
 fi
