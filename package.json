@@ -1,6 +1,6 @@
 {
   "name": "@fairdatasociety/fdp-play",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Orchestration CLI for spinning up local development Bee cluster and FDP environment with Docker",
   "keywords": [
     "bee",
