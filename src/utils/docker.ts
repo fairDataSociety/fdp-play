@@ -404,7 +404,7 @@ export class Docker {
     try {
       // if the image label is 'latest' then it tries to pull the new version of it
       if (createOptions.Image && pullImage) {
-        await this.docker.pull(createOptions.Image)
+        await this.docker.getImage(createOptions.Image).remove()
       }
 
       return await this.docker.createContainer(createOptions)

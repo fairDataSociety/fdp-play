@@ -44,6 +44,7 @@ $ fdp-play start --without-bees
 $ fdp-play start --fairos
 
 # This will clean the containers before start (fresh) and tries to pull the latest images from the Docker repository (pull)
+# NOTE: best to use this if something went wrong.
 $ fdp-play start --pull --fresh
 
 # The spins up the cluster using specific blockchain image.
