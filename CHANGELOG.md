@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/fairDataSociety/fdp-play/compare/v2.0.0...v2.0.1) (2022-07-18)
+
+
+### Bug Fixes
+
+* pull option ([91228f2](https://github.com/fairDataSociety/fdp-play/commit/91228f2ad2748686143fcaeb1aaf8f0d9437d858))
+
 ## [2.0.0](https://github.com/fairDataSociety/fdp-play/compare/v1.0.2...v2.0.0) (2022-07-07)
 
 ### Breaking Changes
