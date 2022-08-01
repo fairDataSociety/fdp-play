@@ -24,7 +24,7 @@ const ENV_FRESH_KEY = 'FDP_PLAY_FRESH'
 export class Start extends RootCommand implements LeafCommand {
   public readonly name = 'start'
 
-  public readonly description = 'Spin up the FDP Play cluster'
+  public readonly description = 'Spin up the FDP Play cluster. Before this, please make sure Docker Service is running!'
 
   @Option({
     key: 'fresh',
@@ -182,7 +182,7 @@ export class Start extends RootCommand implements LeafCommand {
       await docker.createNetwork()
       networkSpinner.succeed('Network is up')
     } catch (e) {
-      networkSpinner.fail(`It was not possible to spawn network!`)
+      networkSpinner.fail(`Impossible to spawn network!`)
       throw e
     }
 
@@ -200,7 +200,7 @@ export class Start extends RootCommand implements LeafCommand {
       await waitForBlockchain()
       blockchainSpinner.succeed('Blockchain node is up and listening')
     } catch (e) {
-      blockchainSpinner.fail(`It was not possible to start blockchain node!`)
+      blockchainSpinner.fail(`Impossible to start blockchain node!`)
       await this.stopDocker(docker)
       throw e
     }
@@ -228,7 +228,7 @@ export class Start extends RootCommand implements LeafCommand {
       )
       queenSpinner.succeed('Queen node is up and listening')
     } catch (e) {
-      queenSpinner.fail(`It was not possible to start queen node!`)
+      queenSpinner.fail(`Impossible to start queen node!`)
       await this.stopDocker(docker)
       throw e
     }
@@ -250,7 +250,7 @@ export class Start extends RootCommand implements LeafCommand {
         await waitForWorkers(this.workers, docker.getAllStatus.bind(docker))
         workerSpinner.succeed('Worker nodes are up and listening')
       } catch (e) {
-        workerSpinner.fail(`It was not possible to start worker nodes!`)
+        workerSpinner.fail(`Impossible to start worker nodes!`)
         await this.stopDocker(docker)
         throw e
       }
@@ -270,7 +270,7 @@ export class Start extends RootCommand implements LeafCommand {
 
         workerSpinner.succeed('FairOS node is up and listening')
       } catch (e) {
-        workerSpinner.fail(`It was not possible to start FairOS node!`)
+        workerSpinner.fail(`Impossible to start FairOS node!`)
         await this.stopDocker(docker)
         throw e
       }
