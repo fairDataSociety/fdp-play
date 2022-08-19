@@ -15,6 +15,7 @@
 - [Install](#install)
 - [Usage](#usage)
 - [Contribute](#contribute)
+- [Maintainers](#maintainers)
 - [License](#license)
 
 ## Install
