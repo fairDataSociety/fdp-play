@@ -15,6 +15,7 @@
 - [Install](#install)
 - [Usage](#usage)
 - [Contribute](#contribute)
+- [Troubleshooting](#troubleshooting)
 - [License](#license)
 
 ## Install
@@ -86,6 +87,18 @@ You can run the CLI while developing using `npm start -- <command> ...`.
 
 - [nugaon](https://github.com/nugaon)
 - [IgorShadurin](https://github.com/IgorShadurin)
+
+## Troubleshooting
+
+### Message: Failed to run command : connect EACCES /var/run/docker.sock
+Running `npm` +  `command` results in message:
+```
+█ Failed to run command!
+
+connect EACCES /var/run/docker.sock
+```
+
+Try troubleshooting Docker as guided on [Stackoverflow thread](https://stackoverflow.com/questions/52364905/after-executing-following-code-of-dockerode-npm-getting-error-connect-eacces-v).  
 
 ## License
 
