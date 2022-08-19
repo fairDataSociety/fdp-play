@@ -76,7 +76,7 @@ There are some ways you can make this module better:
 
 - Consult our [open issues](https://github.com/fairDataSociety/fdp-play/issues) and take on one of them
 - Help our tests reach 100% coverage!
-- Join us in our [Discord chat](https://discord.gg/C9DDaJ9v) in the #fdp-general channel if you have questions or want to give feedback
+- Join us in our [FDS Discord chat](https://discord.gg/KrVTmahcUA) in the #fdp-general channel if you have questions or want to give feedback
 
 ### Developing
 
