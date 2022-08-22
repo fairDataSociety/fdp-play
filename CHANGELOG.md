@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/fairDataSociety/fdp-play/compare/v2.0.1...v2.0.2) (2022-08-18)
+
+
+### Bug Fixes
+
+* latest fairos support ([#29](https://github.com/fairDataSociety/fdp-play/issues/29)) ([3bd37e2](https://github.com/fairDataSociety/fdp-play/commit/3bd37e24402207da42e6a847bd4488fba0f8f915))
+
 ## [2.0.1](https://github.com/fairDataSociety/fdp-play/compare/v2.0.0...v2.0.1) (2022-07-18)
 
 
