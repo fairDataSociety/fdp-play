@@ -4,7 +4,7 @@ import { BatchId, BeeDebug } from '@ethersphere/bee-js'
 
 export async function findContainer(docker: Dockerode, name: string): Promise<Dockerode.ContainerInspectInfo> {
   const containerName = `${process.env[ENV_ENV_PREFIX_KEY]}-${name}`
-  const sleepTimeMs = 3000
+  const sleepTimeMs = 5000
   const trials = 150
   for (let i = 0; i < trials; i++) {
     try {
@@ -12,6 +12,8 @@ export async function findContainer(docker: Dockerode, name: string): Promise<Do
 
       return getContainer
     } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(`Waiting ${sleepTimeMs / 1000} more seconds to query again container "${name}"...`)
       sleep(sleepTimeMs)
     }
   }
