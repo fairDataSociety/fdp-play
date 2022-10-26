@@ -64,7 +64,7 @@ describe('start command', () => {
     }),
   )
 
-  describe('should start cluster without bee nodes', () => {
+  xdescribe('should start cluster without bee nodes', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers
     })
@@ -85,7 +85,7 @@ describe('start command', () => {
     )
   })
 
-  describe('should start cluster with fairos node', () => {
+  xdescribe('should start cluster with fairos node', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers
     })
@@ -106,7 +106,7 @@ describe('start command', () => {
     )
   })
 
-  describe('should start cluster with just few workers', () => {
+  xdescribe('should start cluster with just few workers', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers
     })
@@ -129,7 +129,7 @@ describe('start command', () => {
     )
   })
 
-  describe('should create docker network', () => {
+  xdescribe('should create docker network', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers
 
@@ -153,7 +153,7 @@ describe('start command', () => {
     )
   })
 
-  describe('should remove containers with --fresh option', () => {
+  xdescribe('should remove containers with --fresh option', () => {
     let reference: Reference, data: string
 
     beforeAll(async () => {
