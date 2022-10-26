@@ -64,7 +64,7 @@ describe('start command', () => {
     }),
   )
 
-  xdescribe('should start cluster without bee nodes', () => {
+  describe('should start cluster without bee nodes', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers
     })
@@ -85,7 +85,7 @@ describe('start command', () => {
     )
   })
 
-  xdescribe('should start cluster with fairos node', () => {
+  describe('should start cluster with fairos node', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers
     })
@@ -106,7 +106,7 @@ describe('start command', () => {
     )
   })
 
-  xdescribe('should start cluster with just few workers', () => {
+  describe('should start cluster with just few workers', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers
     })
@@ -129,13 +129,13 @@ describe('start command', () => {
     )
   })
 
-  xdescribe('should create docker network', () => {
+  describe('should create docker network', () => {
     beforeAll(async () => {
       await run(['stop', '--rm']) // Cleanup the testing containers
 
       try {
         // Make sure the network does not exists
-        await (await docker.getNetwork(`${envPrefix}-network`)).remove()
+        await docker.getNetwork(`${envPrefix}-network`).remove()
       } catch (e) {
         if ((e as DockerError).statusCode !== 404) {
           throw e
