@@ -5,7 +5,7 @@ import { BatchId, BeeDebug } from '@ethersphere/bee-js'
 export async function findContainer(docker: Dockerode, name: string): Promise<Dockerode.ContainerInspectInfo> {
   const containerName = `${process.env[ENV_ENV_PREFIX_KEY]}-${name}`
   const sleepTimeMs = 3000
-  const trials = 50
+  const trials = 100
   for (let i = 0; i < trials; i++) {
     try {
       const getContainer = await docker.getContainer(containerName).inspect()
