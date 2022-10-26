@@ -3,7 +3,22 @@ import { ENV_ENV_PREFIX_KEY } from '../../src/constants'
 import { BatchId, BeeDebug } from '@ethersphere/bee-js'
 
 export async function findContainer(docker: Dockerode, name: string): Promise<Dockerode.ContainerInspectInfo> {
-  return docker.getContainer(`${process.env[ENV_ENV_PREFIX_KEY]}-${name}`).inspect()
+  const containerName = `${process.env[ENV_ENV_PREFIX_KEY]}-${name}`
+  const sleepTimeMs = 3000
+  const trials = 50
+  for (let i = 0; i < trials; i++) {
+    try {
+      const getContainer = await docker.getContainer(containerName).inspect()
+
+      return getContainer
+    } catch (e) {
+      sleep(sleepTimeMs)
+    }
+  }
+
+  throw new Error(
+    `Container "${containerName}" has been not initialized within ${(sleepTimeMs * trials) / 1000} seconds`,
+  )
 }
 
 export async function sleep(ms: number): Promise<void> {
