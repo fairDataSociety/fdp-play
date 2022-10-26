@@ -12,9 +12,7 @@ export async function findContainer(docker: Dockerode, name: string): Promise<Do
 
       return getContainer
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(`Waiting ${sleepTimeMs / 1000} more seconds to query again container "${name}"...`)
-      sleep(sleepTimeMs)
+      await sleep(sleepTimeMs)
     }
   }
 
