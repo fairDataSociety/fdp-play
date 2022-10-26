@@ -6,7 +6,7 @@ import { run } from '../utils/run'
 import { ENV_ENV_PREFIX_KEY } from '../../src/constants'
 import { Bee, BeeDebug, Reference } from '@ethersphere/bee-js'
 import { DockerError } from '../../src/utils/docker'
-import { findContainer, waitForUsablePostageStamp } from '../utils/docker'
+import { findContainer, sleep, waitForUsablePostageStamp } from '../utils/docker'
 
 let testFailed = false
 
@@ -19,6 +19,11 @@ function wrapper(fn: () => Promise<unknown>): () => Promise<unknown> {
       throw e
     }
   }
+}
+
+async function stopNodes() {
+  await run(['stop', '--rm']) // Cleanup the testing containers
+  await sleep(5000)
 }
 
 describe('start command', () => {
@@ -40,18 +45,14 @@ describe('start command', () => {
       await run(['logs', 'queen'])
     }
 
-    await run(['stop'])
-  })
-
-  afterAll(async () => {
-    await run(['stop', '--rm']) // Cleanup the testing containers
+    await stopNodes()
   })
 
   it(
     'should start cluster',
     wrapper(async () => {
       // As spinning the cluster with --detach the command will exit once the cluster is up and running
-      await run(['start'])
+      await run(['start', '--detach'])
 
       await expect(findContainer(docker, 'queen')).resolves.toBeDefined()
       await expect(findContainer(docker, 'blockchain')).resolves.toBeDefined()
@@ -66,7 +67,7 @@ describe('start command', () => {
 
   describe('should start cluster without bee nodes', () => {
     beforeAll(async () => {
-      await run(['stop', '--rm']) // Cleanup the testing containers
+      await stopNodes()
     })
 
     it(
@@ -87,7 +88,7 @@ describe('start command', () => {
 
   describe('should start cluster with fairos node', () => {
     beforeAll(async () => {
-      await run(['stop', '--rm']) // Cleanup the testing containers
+      await stopNodes()
     })
 
     it(
@@ -108,7 +109,7 @@ describe('start command', () => {
 
   describe('should start cluster with just few workers', () => {
     beforeAll(async () => {
-      await run(['stop', '--rm']) // Cleanup the testing containers
+      await stopNodes()
     })
 
     it(
@@ -131,7 +132,7 @@ describe('start command', () => {
 
   describe('should create docker network', () => {
     beforeAll(async () => {
-      await run(['stop', '--rm']) // Cleanup the testing containers
+      await stopNodes()
 
       try {
         // Make sure the network does not exists
@@ -146,7 +147,7 @@ describe('start command', () => {
     it(
       '',
       wrapper(async () => {
-        await run(['start'])
+        await run(['start', '--detach'])
 
         expect(docker.getNetwork(`${envPrefix}-network`)).toBeDefined()
       }),
@@ -158,7 +159,7 @@ describe('start command', () => {
 
     beforeAll(async () => {
       console.log('(before) Starting up Bee Factory')
-      await run(['start'])
+      await run(['start', '--detach'])
 
       console.log('(before) Creating postage stamp ')
       const postage = await beeDebug.createPostageBatch('10', 18)
@@ -173,13 +174,14 @@ describe('start command', () => {
 
       console.log('(before) Stopping the Bee Factory')
       await run(['stop'])
+      await sleep(5000)
     })
 
     it(
       '',
       wrapper(async () => {
         console.log('(test) Starting the Bee Factory')
-        await run(['start', '--fresh'])
+        await run(['start', '--fresh', '--detach'])
 
         console.log('(test) Trying to fetch the data')
         await expect(bee.downloadData(reference)).rejects.toHaveProperty('status', 404)
