@@ -36,7 +36,7 @@
     "prepublishOnly": "npm run build",
     "build": "rimraf dist && webpack --progress --env mode=production",
     "start": "webpack --progress",
-    "test": "jest --verbose --config=jest.config.ts",
+    "test": "jest --verbose --config=jest.config.ts -i",
     "types:check": "tsc --project tsconfig.test.json",
     "lint": "eslint --fix \"src/**/*.ts\" \"test/**/*.ts\" && prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint:check": "eslint \"src/**/*.ts\" \"test/**/*.ts\" && prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
