@@ -4,28 +4,15 @@ import { BatchId, BeeDebug } from '@ethersphere/bee-js'
 
 export async function findContainer(docker: Dockerode, name: string): Promise<Dockerode.ContainerInspectInfo> {
   const containerName = `${process.env[ENV_ENV_PREFIX_KEY]}-${name}`
-  const sleepTimeMs = 5000
-  const trials = 150
-  for (let i = 0; i < trials; i++) {
-    try {
-      const getContainer = await docker.getContainer(containerName).inspect()
 
-      return getContainer
-    } catch (e) {
-      await sleep(sleepTimeMs)
-    }
-  }
-
-  throw new Error(
-    `Container "${containerName}" has been not initialized within ${(sleepTimeMs * trials) / 1000} seconds`,
-  )
+  return docker.getContainer(containerName).inspect()
 }
 
 export async function sleep(ms: number): Promise<void> {
   return new Promise<void>(resolve => setTimeout(() => resolve(), ms))
 }
 
-export async function waitForUsablePostageStamp(beeDebug: BeeDebug, id: BatchId, timeout = 30_000): Promise<void> {
+export async function waitForUsablePostageStamp(beeDebug: BeeDebug, id: BatchId, timeout = 50_000): Promise<void> {
   const TIME_STEP = 1500
   for (let time = 0; time < timeout; time += TIME_STEP) {
     // it is in a try...catch because after postage creation Bee (1.8.2) does not find stamp immediately somehow
