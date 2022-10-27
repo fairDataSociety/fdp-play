@@ -6,7 +6,7 @@ import { run } from '../utils/run'
 import { ENV_ENV_PREFIX_KEY } from '../../src/constants'
 import { Bee, BeeDebug, Reference } from '@ethersphere/bee-js'
 import { DockerError } from '../../src/utils/docker'
-import { findContainer, sleep, waitForUsablePostageStamp } from '../utils/docker'
+import { findContainer, waitForUsablePostageStamp } from '../utils/docker'
 
 let testFailed = false
 
@@ -173,7 +173,6 @@ describe('start command', () => {
 
       console.log('(before) Stopping the Bee Factory')
       await run(['stop'])
-      await sleep(5000)
     })
 
     it(

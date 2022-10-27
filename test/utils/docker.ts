@@ -12,7 +12,7 @@ export async function sleep(ms: number): Promise<void> {
   return new Promise<void>(resolve => setTimeout(() => resolve(), ms))
 }
 
-export async function waitForUsablePostageStamp(beeDebug: BeeDebug, id: BatchId, timeout = 50_000): Promise<void> {
+export async function waitForUsablePostageStamp(beeDebug: BeeDebug, id: BatchId, timeout = 120_000): Promise<void> {
   const TIME_STEP = 1500
   for (let time = 0; time < timeout; time += TIME_STEP) {
     // it is in a try...catch because after postage creation Bee (1.8.2) does not find stamp immediately somehow
