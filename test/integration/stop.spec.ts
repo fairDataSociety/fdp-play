@@ -6,7 +6,7 @@ import { run } from '../utils/run'
 import { ENV_ENV_PREFIX_KEY } from '../../src/constants'
 import { findContainer } from '../utils/docker'
 
-xdescribe('stop command', () => {
+describe('stop command', () => {
   let docker: Dockerode
   const envPrefix = `bee-factory-test-${crypto.randomBytes(4).toString('hex')}`
 

@@ -116,7 +116,7 @@ describe('start command', () => {
       '',
       wrapper(async () => {
         // As spinning the cluster with --detach the command will exit once the cluster is up and running
-        await run(['start', '--workers', '2'])
+        await run(['start', '--detach', '--workers', '2'])
 
         await expect(findContainer(docker, 'queen')).resolves.toBeDefined()
         await expect(findContainer(docker, 'blockchain')).resolves.toBeDefined()
@@ -147,14 +147,14 @@ describe('start command', () => {
     it(
       '',
       wrapper(async () => {
-        await run(['start', '--detach'])
+        await run(['start', '--detach', '--without-bees'])
 
         expect(docker.getNetwork(`${envPrefix}-network`)).toBeDefined()
       }),
     )
   })
 
-  xdescribe('should remove containers with --fresh option', () => {
+  describe('should remove containers with --fresh option', () => {
     let reference: Reference, data: string
 
     beforeAll(async () => {
