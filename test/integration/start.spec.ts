@@ -23,7 +23,6 @@ function wrapper(fn: () => Promise<unknown>): () => Promise<unknown> {
 
 async function stopNodes() {
   await run(['stop', '--rm']) // Cleanup the testing containers
-  await sleep(5000)
 }
 
 describe('start command', () => {
