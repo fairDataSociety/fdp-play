@@ -228,7 +228,7 @@ export class Start extends RootCommand implements LeafCommand {
       )
       queenSpinner.succeed('Queen node is up and listening')
     } catch (e) {
-      queenSpinner.fail(`Impossible to start queen node!`)
+      queenSpinner.fail(`Impossible to start queen node: ${(e as Error).message}`)
       await this.stopDocker(docker)
       throw e
     }

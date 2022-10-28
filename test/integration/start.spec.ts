@@ -21,6 +21,10 @@ function wrapper(fn: () => Promise<unknown>): () => Promise<unknown> {
   }
 }
 
+async function stopNodes() {
+  await run(['stop', '--rm']) // Cleanup the testing containers
+}
+
 describe('start command', () => {
   let docker: Dockerode
   let bee: Bee, beeDebug: BeeDebug
@@ -40,11 +44,7 @@ describe('start command', () => {
       await run(['logs', 'queen'])
     }
 
-    await run(['stop'])
-  })
-
-  afterAll(async () => {
-    await run(['stop', '--rm']) // Cleanup the testing containers
+    await stopNodes()
   })
 
   it(
@@ -66,7 +66,7 @@ describe('start command', () => {
 
   describe('should start cluster without bee nodes', () => {
     beforeAll(async () => {
-      await run(['stop', '--rm']) // Cleanup the testing containers
+      await stopNodes()
     })
 
     it(
@@ -87,7 +87,7 @@ describe('start command', () => {
 
   describe('should start cluster with fairos node', () => {
     beforeAll(async () => {
-      await run(['stop', '--rm']) // Cleanup the testing containers
+      await stopNodes()
     })
 
     it(
@@ -108,14 +108,14 @@ describe('start command', () => {
 
   describe('should start cluster with just few workers', () => {
     beforeAll(async () => {
-      await run(['stop', '--rm']) // Cleanup the testing containers
+      await stopNodes()
     })
 
     it(
       '',
       wrapper(async () => {
         // As spinning the cluster with --detach the command will exit once the cluster is up and running
-        await run(['start', '--workers', '2'])
+        await run(['start', '--detach', '--workers', '2'])
 
         await expect(findContainer(docker, 'queen')).resolves.toBeDefined()
         await expect(findContainer(docker, 'blockchain')).resolves.toBeDefined()
@@ -131,11 +131,11 @@ describe('start command', () => {
 
   describe('should create docker network', () => {
     beforeAll(async () => {
-      await run(['stop', '--rm']) // Cleanup the testing containers
+      await stopNodes()
 
       try {
         // Make sure the network does not exists
-        await (await docker.getNetwork(`${envPrefix}-network`)).remove()
+        await docker.getNetwork(`${envPrefix}-network`).remove()
       } catch (e) {
         if ((e as DockerError).statusCode !== 404) {
           throw e
@@ -146,7 +146,7 @@ describe('start command', () => {
     it(
       '',
       wrapper(async () => {
-        await run(['start', '--detach'])
+        await run(['start', '--detach', '--without-bees'])
 
         expect(docker.getNetwork(`${envPrefix}-network`)).toBeDefined()
       }),
