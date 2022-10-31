@@ -70,7 +70,7 @@
     "@types/webpack-bundle-analyzer": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.10.0",
-    "babel-jest": "^28.1.1",
+    "babel-jest": "^29.2.2",
     "babel-loader": "^8.2.5",
     "depcheck": "^1.4.3",
     "eslint": "^8.16.0",
