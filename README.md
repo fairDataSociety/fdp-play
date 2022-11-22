@@ -9,7 +9,7 @@
 
 **Warning: This project is in beta state. There might (and most probably will) be changes in the future to its API and working. Also, no guarantees can be made about its stability, efficiency, and security at this stage.**
 
-## Quick link for [end-to-end tutorial](https://www.youtube.com/watch?v=Mt5468WzWaA) ▶️ ⏯️
+## [Short tutorial video](https://www.youtube.com/watch?v=Mt5468WzWaA) ▶️ ⏯️
 
 ## Table of Contents
 - [Install](#install)
