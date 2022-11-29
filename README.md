@@ -1,7 +1,6 @@
 # FDP Play
 
 [![Tests](https://github.com/fairDataSociety/fdp-play/actions/workflows/test.yaml/badge.svg)](https://github.com/fairDataSociety/fdp-play/actions/workflows/test.yaml)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FfairDataSociety%2Ffdp-play.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%fairDataSociety%fdp-play?ref=badge_shield)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 ![](https://img.shields.io/badge/npm-%3E%3D6.9.0-orange.svg?style=flat-square)
 ![](https://img.shields.io/badge/Node.js-%3E%3D12.0.0-orange.svg?style=flat-square)
@@ -10,8 +9,9 @@
 
 **Warning: This project is in beta state. There might (and most probably will) be changes in the future to its API and working. Also, no guarantees can be made about its stability, efficiency, and security at this stage.**
 
-## Table of Contents
+## [Short tutorial video](https://www.youtube.com/watch?v=Mt5468WzWaA) ▶️ ⏯️
 
+## Table of Contents
 - [Install](#install)
 - [Usage](#usage)
 - [Contribute](#contribute)
