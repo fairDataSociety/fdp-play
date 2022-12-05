@@ -63,6 +63,12 @@ $ fdp-play stop
 # You can also spin up the cluster without the --detach which then directly
 # attaches to the Queen logs and the cluster is terminated upon SIGINT (Ctrl+C)
 $ fdp-play start
+
+# Send ETH to any address
+$ fdp-play eth send --to 0xD2934934181720d2f17D37CBcB421dbEa3d3f805 -a 0.5
+
+# Query the ETH balance of any Ethereum address
+$ fdp-play eth balance 0xD2934934181720d2f17D37CBcB421dbEa3d3f805
 ```
 
 For more details see the `--help` page of the CLI and its commands.
