@@ -7,7 +7,7 @@ import { ENV_ENV_PREFIX_KEY } from '../../src/constants'
 import { describeCommand } from '../utils/console-log'
 import { sleep } from '../../src/utils'
 
-describeCommand('stop command', ({ getLastMessage, getNthLastMessage }) => {
+describeCommand('stop command', ({ getLastMessage }) => {
   const envPrefix = `bee-factory-test-${crypto.randomBytes(4).toString('hex')}`
 
   beforeAll(async () => {

@@ -37,9 +37,6 @@ export class Send extends EthCommand implements LeafCommand {
   public async run(): Promise<void> {
     await super.init()
 
-    // this.assertAddress(this.to)
-    // this.console.log(`this.to ${isEthereumAddress(this.to)}`)
-
     const account = this.provider.getSigner(this.from)
 
     if (!account) {
