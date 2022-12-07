@@ -1,9 +1,10 @@
 import { RootCommand } from '../root-command'
 import { providers } from 'ethers'
 import { CommandLineError } from '../../utils/error'
+import { BLOCKCHAIN_RPC_EP } from '../../constants'
 
 export class EthCommand extends RootCommand {
-  protected provider = new providers.JsonRpcProvider('http://localhost:9545')
+  protected provider = new providers.JsonRpcProvider(BLOCKCHAIN_RPC_EP)
 
   protected async init(): Promise<void> {
     await super.init()
