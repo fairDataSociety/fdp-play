@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/fairDataSociety/fdp-play/compare/v2.0.2...v2.1.0) (2023-01-31)
+
+
+### Features
+
+* update bee and blockchains ([#81](https://github.com/fairDataSociety/fdp-play/issues/81)) ([f840737](https://github.com/fairDataSociety/fdp-play/commit/f840737e4b084fd51749ba848c667043a073d123))
+
 ## [2.0.2](https://github.com/fairDataSociety/fdp-play/compare/v2.0.1...v2.0.2) (2022-08-18)
 
 
