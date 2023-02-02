@@ -18,9 +18,12 @@ export const WORKER_COUNT = 4
 export const BLOCKCHAIN_VERSION_LABEL_KEY = 'org.ethswarm.beefactory.blockchain-version'
 
 // TODO: This should be possible to override with for example ENV variable in case somebody is rocking custom images
-const SWAP_FACTORY_ADDRESS = '0x5b1869D9A4C187F2EAa108f3062412ecf0526b24'
-const POSTAGE_STAMP_ADDRESS = '0xCfEB869F69431e42cdB54A4F4f105C19C080A601'
-const PRICE_ORACLE_ADDRESS = '0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B'
+const SWAP_PRICE_ORACLE_ADDRESS = '0x5b1869D9A4C187F2EAa108f3062412ecf0526b24'
+const SWAP_FACTORY_ADDRESS = '0xCfEB869F69431e42cdB54A4F4f105C19C080A601'
+const POSTAGE_STAMP_ADDRESS = '0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B'
+// const POSTAGE_PRICE_ORACLE_ADDRESS = '0xC89Ce4735882C9F0f0FE26686c53074E09B0D550'
+const STAKE_REGISTRY_ADDRESS = '0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb'
+const REDISTRIBUTION_ADDRESS = '0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7'
 
 export interface RunOptions {
   fresh: boolean
@@ -484,7 +487,10 @@ export class Docker {
       'swap-factory-address': SWAP_FACTORY_ADDRESS,
       password: 'password',
       'postage-stamp-address': POSTAGE_STAMP_ADDRESS,
-      'price-oracle-address': PRICE_ORACLE_ADDRESS,
+      'price-oracle-address': SWAP_PRICE_ORACLE_ADDRESS,
+      'redistribution-address': REDISTRIBUTION_ADDRESS,
+      'staking-address': STAKE_REGISTRY_ADDRESS,
+      'postage-stamp-start-block': '1',
       'network-id': '4020',
       'full-node': 'true',
       'welcome-message': 'You have found the queen of the beehive...',
