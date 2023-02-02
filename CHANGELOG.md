@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/fairDataSociety/fdp-play/compare/v2.1.0...v2.1.1) (2023-02-02)
+
+
+### Bug Fixes
+
+* starting bee cli params ([#83](https://github.com/fairDataSociety/fdp-play/issues/83)) ([dc9477c](https://github.com/fairDataSociety/fdp-play/commit/dc9477c8873aef20da5f803fe2681ef183647781))
+
 ## [2.1.0](https://github.com/fairDataSociety/fdp-play/compare/v2.0.2...v2.1.0) (2023-01-31)
 
 
