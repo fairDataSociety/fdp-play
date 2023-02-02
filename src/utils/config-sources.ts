@@ -1,4 +1,4 @@
-const VERSION_REGEX = /^\d\.\d\.\d(-\w+)*$/
+const VERSION_REGEX = /^\d+\.\d+\.\d+(-\w+)*$/
 
 export function stripCommit(version: string): string {
   if (version === 'latest') {
