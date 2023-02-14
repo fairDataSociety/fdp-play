@@ -173,6 +173,10 @@ do
         BEE_VERSION="${1#*=}"
         shift 1
         ;;
+        --hostname=*)
+        HOSTNAME="${1#*=}"
+        shift 1
+        ;;
         --port-maps=*)
         PORT_MAPS="${1#*=}"
         shift 1
