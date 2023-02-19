@@ -5,9 +5,9 @@ export function stripCommit(version: string): string {
     return version
   }
 
-  if (!VERSION_REGEX.test(version)) {
-    throw new Error('The version does not have expected format!')
-  }
+  // if (!VERSION_REGEX.test(version)) {
+  //   throw new Error('The version does not have expected format!')
+  // }
 
   // If the version contains commit ==> hash remove it
   return version.replace('-stateful', '').replace(/-[0-9a-fA-F]{8}$/, '')
