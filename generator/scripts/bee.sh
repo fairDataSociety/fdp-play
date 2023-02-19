@@ -122,7 +122,6 @@ SWARM_BLOCKCHAIN_NAME="$BEE_ENV_PREFIX-blockchain"
 NETWORK="$BEE_ENV_PREFIX-network"
 QUEEN_CONTAINER_IN_DOCKER=$(docker container ls -qaf name="$QUEEN_CONTAINER_NAME")
 BEE_BASE_IMAGE="ethersphere/bee"
-OWN_IMAGE=false
 BEE_PASSWORD="password"
 QUEEN_BOOTNODE=""
 PORT_MAPS=2
@@ -181,10 +180,6 @@ do
         PORT_MAPS="${1#*=}"
         shift 1
         ;;
-        --own-image)
-        OWN_IMAGE=true
-        shift 1
-        ;;
         --detach)
         LOG=false
         shift 1
@@ -208,11 +203,7 @@ fi
 # Start Bee Queen
 if [ -z "$QUEEN_CONTAINER_IN_DOCKER" ] || $EPHEMERAL ; then
     DOCKER_IMAGE="$BEE_IMAGE"
-    if $OWN_IMAGE ; then
-        DOCKER_IMAGE="$BEE_IMAGE_PREFIX/$QUEEN_CONTAINER_NAME:$BEE_VERSION"
-    else
-        EXTRA_QUEEN_PARAMS="-v $INIT_ROOT_DATA_DIR/$QUEEN_CONTAINER_NAME:/home/bee/.bee"
-    fi
+    EXTRA_QUEEN_PARAMS="-v $INIT_ROOT_DATA_DIR/$QUEEN_CONTAINER_NAME:/home/bee/.bee"
     if [ "$PORT_MAPS" -ge 1 ] ; then
         EXTRA_QUEEN_PARAMS="$EXTRA_QUEEN_PARAMS -p 1633-1635:1633-1635"
     fi
