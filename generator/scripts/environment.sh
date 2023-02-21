@@ -135,7 +135,7 @@ while : ; do
 done
 
 # Build up bee.sh parameters
-BEE_SH_ARGUMENTS="--workers=$WORKERS --own-image --port-maps=$PORT_MAPS --hostname=$HOSTNAME"
+BEE_SH_ARGUMENTS="--workers=$WORKERS --port-maps=$PORT_MAPS --hostname=$HOSTNAME"
 if $EPHEMERAL ; then
     BEE_SH_ARGUMENTS="$BEE_SH_ARGUMENTS --ephemeral"
 fi
