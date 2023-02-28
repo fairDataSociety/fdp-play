@@ -254,11 +254,7 @@ for i in $(seq 1 1 "$WORKERS"); do
         # construct additional params
         EXTRA_WORKER_PARAMS=""
         DOCKER_IMAGE="$BEE_IMAGE"
-        if $OWN_IMAGE ; then
-            DOCKER_IMAGE="$BEE_IMAGE_PREFIX/$WORKER_NAME:$BEE_VERSION"
-        else
-            EXTRA_WORKER_PARAMS="$EXTRA_WORKER_PARAMS -v $INIT_ROOT_DATA_DIR/$WORKER_NAME:/home/bee/.bee"
-        fi
+        EXTRA_WORKER_PARAMS="$EXTRA_WORKER_PARAMS -v $INIT_ROOT_DATA_DIR/$WORKER_NAME:/home/bee/.bee"
         if [ $PORT_MAPS -gt $i ] ; then
             PORT_START=$((1633+(10000*i)))
             PORT_END=$((PORT_START + 2))
