@@ -3,6 +3,7 @@ import PackageJson from '../package.json'
 import { Start } from './command/start'
 import { Stop } from './command/stop'
 import { Logs } from './command/logs'
+import { Eth } from './command/eth'
 
 export const quiet: IOption<boolean> = {
   key: 'quiet',
@@ -43,4 +44,4 @@ export const version: IOption<boolean> = {
 
 export const optionParameters: IOption<unknown>[] = [quiet, verbose, help, version]
 
-export const rootCommandClasses = [Start, Stop, Logs]
+export const rootCommandClasses = [Start, Stop, Logs, Eth]
