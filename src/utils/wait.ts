@@ -27,6 +27,13 @@ function isAllowedError(e: FetchError): boolean {
     return true
   }
 
+  // Error when requesting from Node 18 to bee node (1.11.1).
+  // Happens in `beeDebug.getNodeAddresses()` method.
+  // It looks like the bee node sends a response with a missing header, or the response is processed incorrectly.
+  if (e.message.includes('other side closed')) {
+    return true
+  }
+
   return ALLOWED_ERRORS.some(substring => e.message.includes(substring))
 }
 
