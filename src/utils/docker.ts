@@ -521,7 +521,7 @@ export class Docker {
       `--postageBlockId=${batchId}`,
       `--cors-origins=${corsOrigins}`,
       `--beeApi=${beeApiUrl}`,
-      `--network=play`,
+      `--ens-network=play`,
       `--rpc=http://${this.blockchainName}:9545`,
       `--cookieDomain=${cookieDomain}`,
     ]
