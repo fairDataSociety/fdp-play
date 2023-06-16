@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.2.0](https://github.com/fairDataSociety/fdp-play/compare/v2.1.1...v2.2.0) (2023-06-07)
+
+
+### Features
+
+* eth command ([#73](https://github.com/fairDataSociety/fdp-play/issues/73)) ([0ae40de](https://github.com/fairDataSociety/fdp-play/commit/0ae40de30abfbc4414ee8609c3996dc077e5977a))
+* stateful environment script ([#87](https://github.com/fairDataSociety/fdp-play/issues/87)) ([50b2037](https://github.com/fairDataSociety/fdp-play/commit/50b2037e63f695e416dc94d4465dab9a10d2bcb3))
+
+
+### Bug Fixes
+
+* **generator:** bee worker startup ([b49f172](https://github.com/fairDataSociety/fdp-play/commit/b49f1723ed09835b254e248a67f894250676d467))
+* node 18 error ([#92](https://github.com/fairDataSociety/fdp-play/issues/92)) ([6b39a98](https://github.com/fairDataSociety/fdp-play/commit/6b39a98a75a666cd98cda2d73772b3f685a5dbfa))
+
 ## [2.1.1](https://github.com/fairDataSociety/fdp-play/compare/v2.1.0...v2.1.1) (2023-02-02)
 
 
