@@ -13,6 +13,8 @@ do
   echo "$BEE_DIR"
   rm -rf "$BEE_DIR/localstore"
   rm -rf "$BEE_DIR/statestore"
+  rm -rf "$BEE_DIR/kademlia-metrics"
+  rm -rf "$BEE_DIR/stamperstore"
 done
 
 echo "Removing stopped Bee Docker containers..."
