@@ -35,13 +35,14 @@ function getPostageStampBin(tokenAddress, adminAddress, minimumBucketDepth = 16)
   return bin + tokenAddress + minimumBucketDepth + adminAddress
 }
 
-function getPostagePriceOracleBin(tokenAddress) {
+function getPostagePriceOracleBin(tokenAddress, adminAddress) {
   const binPath = Path.join(__dirname, '..', 'contracts', 'PostagePriceOracle.bytecode')
   const bin = FS.readFileSync(binPath, 'utf8').toString().trim()
   tokenAddress = prefixedAddressParamToByteCode(tokenAddress)
+  adminAddress = prefixedAddressParamToByteCode(adminAddress)
 
   //add tokenaddress for param to the end of the bytecode
-  return bin + tokenAddress
+  return bin + tokenAddress + adminAddress
 }
 
 function getSwapPriceOracleBin(price, chequeValueDeduction) {
@@ -54,25 +55,27 @@ function getSwapPriceOracleBin(price, chequeValueDeduction) {
   return bin + priceAbi + chequeValueAbi
 }
 
-function getStakeRegistryBin(tokenAddress) {
+function getStakeRegistryBin(tokenAddress, adminAddress) {
   const binPath = Path.join(__dirname, '..', 'contracts', 'StakeRegistry.bytecode')
   const bin = FS.readFileSync(binPath, 'utf8').toString().trim()
   tokenAddress = prefixedAddressParamToByteCode(tokenAddress)
+  adminAddress = prefixedAddressParamToByteCode(adminAddress)
   const networkIdAbi = intToByteCode(NETWORK_ID)
 
   //add tokenaddress and encoded network ID for param to the end of the bytecode
-  return bin + tokenAddress + networkIdAbi
+  return bin + tokenAddress + networkIdAbi + adminAddress
 }
 
-function getRedistributionBin(stakingAddress, postageContractAddress, oracleContractAddress) {
+function getRedistributionBin(stakingAddress, postageContractAddress, oracleContractAddress, adminAddress) {
   const binPath = Path.join(__dirname, '..', 'contracts', 'Redistribution.bytecode')
   const bin = FS.readFileSync(binPath, 'utf8').toString().trim()
   stakingAddress = prefixedAddressParamToByteCode(stakingAddress)
   postageContractAddress = prefixedAddressParamToByteCode(postageContractAddress)
   oracleContractAddress = prefixedAddressParamToByteCode(oracleContractAddress)
+  adminAddress = prefixedAddressParamToByteCode(adminAddress)
 
   //add staking address, postage address and oracle contract address for param to the end of the bytecode
-  return bin + stakingAddress + postageContractAddress + oracleContractAddress
+  return bin + stakingAddress + postageContractAddress + oracleContractAddress + adminAddress
 }
 
 /** Returns back contract hash */
@@ -108,7 +111,7 @@ async function createSwapPriceOracleContract(creatorAccount, price = 100000, che
 }
 
 async function createPostagePriceOracleContract(creatorAccount, erc20ContractAddress) {
-  return createContract('PostagePriceOracle', getPostagePriceOracleBin(erc20ContractAddress), creatorAccount)
+  return createContract('PostagePriceOracle', getPostagePriceOracleBin(erc20ContractAddress, creatorAccount), creatorAccount)
 }
 
 async function createSimpleSwapFactoryContract(creatorAccount, erc20ContractAddress) {
@@ -120,7 +123,7 @@ async function createPostageStampContract(creatorAccount, erc20ContractAddress) 
 }
 
 async function createStakeRegistryContract(creatorAccount, erc20ContractAddress) {
-  return createContract('StakeRegistry', getStakeRegistryBin(erc20ContractAddress), creatorAccount)
+  return createContract('StakeRegistry', getStakeRegistryBin(erc20ContractAddress, creatorAccount), creatorAccount)
 }
 
 async function createRedistributionContract(
@@ -131,7 +134,7 @@ async function createRedistributionContract(
 ) {
   return createContract(
     'Redistribution',
-    getRedistributionBin(stakeRegistryAddress, postageStampAddress, postagePriceOracleAddress),
+    getRedistributionBin(stakeRegistryAddress, postageStampAddress, postagePriceOracleAddress, creatorAccount),
     creatorAccount,
   )
 }
