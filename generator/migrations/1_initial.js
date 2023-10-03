@@ -2,6 +2,7 @@
 const ERC20PresetMinterPauser = artifacts.require('ERC20PresetMinterPauser')
 const FS = require('fs')
 const Path = require('path')
+const { saveContractAddresses } = require('../src/utils')
 
 const NETWORK_ID = 4020
 
@@ -23,13 +24,15 @@ function getSimpleSwapFactoryBin(tokenAddress) {
   return bin + tokenAddress
 }
 
-function getPostageStampBin(tokenAddress) {
+function getPostageStampBin(tokenAddress, adminAddress, minimumBucketDepth = 16) {
   const binPath = Path.join(__dirname, '..', 'contracts', 'PostageStamp.bytecode')
   const bin = FS.readFileSync(binPath, 'utf8').toString()
   tokenAddress = prefixedAddressParamToByteCode(tokenAddress)
+  adminAddress = prefixedAddressParamToByteCode(adminAddress)
+  minimumBucketDepth = intToByteCode(minimumBucketDepth)
 
   //add tokenaddress for param to the end of the bytecode
-  return bin + tokenAddress
+  return bin + tokenAddress + minimumBucketDepth + adminAddress
 }
 
 function getPostagePriceOracleBin(tokenAddress) {
@@ -113,7 +116,7 @@ async function createSimpleSwapFactoryContract(creatorAccount, erc20ContractAddr
 }
 
 async function createPostageStampContract(creatorAccount, erc20ContractAddress) {
-  return createContract('PostageStamp', getPostageStampBin(erc20ContractAddress), creatorAccount)
+  return createContract('PostageStamp', getPostageStampBin(erc20ContractAddress, creatorAccount), creatorAccount)
 }
 
 async function createStakeRegistryContract(creatorAccount, erc20ContractAddress) {
@@ -137,16 +140,26 @@ module.exports = function (deployer, network, accounts) {
   deployer.deploy(ERC20PresetMinterPauser, 'Swarm Token', 'BZZ').then(async () => {
     const creatorAccount = accounts[0]
     const erc20Address = ERC20PresetMinterPauser.address
-    await createSwapPriceOracleContract(creatorAccount)
-    await createSimpleSwapFactoryContract(creatorAccount, erc20Address)
+    const swapPriceOracleAddress = await createSwapPriceOracleContract(creatorAccount)
+    const swapFactoryAddress = await createSimpleSwapFactoryContract(creatorAccount, erc20Address)
     const postageStampAddress = await createPostageStampContract(creatorAccount, erc20Address)
     const postagePriceOracleAddress = await createPostagePriceOracleContract(creatorAccount, erc20Address)
     const stakeRegistryAddress = await createStakeRegistryContract(creatorAccount, erc20Address)
-    await createRedistributionContract(
+    const redistributionAddress = await createRedistributionContract(
       creatorAccount,
       stakeRegistryAddress,
       postageStampAddress,
       postagePriceOracleAddress,
     )
+
+    saveContractAddresses({
+      bzzToken: erc20Address,
+      swapPriceOrcale: swapPriceOracleAddress,
+      swapFactory: swapFactoryAddress,
+      postage: postageStampAddress,
+      postagePriceOracle: postagePriceOracleAddress,
+      stakeRegistry: stakeRegistryAddress,
+      redistribution: redistributionAddress,
+    })
   })
 }
