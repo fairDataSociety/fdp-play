@@ -1,0 +1,28 @@
+{
+  "name": "orchestrator",
+  "version": "1.0.0",
+  "description": "deploying smart contracts and manage environment",
+  "main": "index.js",
+  "scripts": {
+    "blockchain:init": "./blockchain/init.sh",
+    "blockchain:start": "./blockchain/start.sh"
+  },
+  "keywords": [
+    "swarm",
+    "orchestrator",
+    "fdp-play"
+  ],
+  "author": "Viktor Levente Tóth @nugaon",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.4",
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "ethers": "^6.7.1",
+    "hardhat": "^2.18.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3"
+  }
+}
