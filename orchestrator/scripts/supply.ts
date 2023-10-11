@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { ethers } from 'hardhat'
 import beeAddresses from '../bee-eth-addresses.json'
+import contractAddresses from '../contract-addresses.json'
 import { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
 
 function getRawTokenAmount(amount: string, decimals = 18) {
@@ -40,7 +41,7 @@ async function supplyEther(supplierAccount: HardhatEthersSigner, recepientAddres
 
 /** Supply given address with the given Token amount */
 async function mintToken(supplierAccount: HardhatEthersSigner, recepientAddress: string, tokenAmount = '100') {
-  const instance = await ethers.getContractAt('ERC20PresetMinterPauser', supplierAccount)
+  const instance = await ethers.getContractAt('ERC20PresetMinterPauser', contractAddresses.bzzToken, supplierAccount)
   const rawTokenAmount = getRawTokenAmount(tokenAmount)
   try {
     const transaction = await instance.mint(recepientAddress, rawTokenAmount)
