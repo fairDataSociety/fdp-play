@@ -14,5 +14,4 @@ echo "Blockchain will have image version: $BLOCKCHAIN_VERSION"
 NAME="$BEE_ENV_PREFIX-blockchain"
 
 echo "Make blockchain docker image"
-sudo chown $(id -u) -R $MY_PATH/.ethereum
-docker build $MY_PATH -t $BEE_IMAGE_PREFIX/$NAME:$BLOCKCHAIN_VERSION
+sudo docker build $MY_PATH -t $BEE_IMAGE_PREFIX/$NAME:$BLOCKCHAIN_VERSION

@@ -8,9 +8,9 @@
     "blockchain:start": "./blockchain/start.sh",
     "migrate:contracts": "hardhat run scripts/deploy.ts --network fdpPlay",
     "supply": "hardhat run scripts/supply.ts --network fdpPlay",
-    "build:env": "./scripts/build-environment.sh",
-    "publish:env": "./scripts/publish-environment.sh",
-    "run:env": "./scripts/environment.sh"
+    "build:env": "./builder/build-environment.sh",
+    "publish:env": "./builder/publish-environment.sh",
+    "run:env": "./builder/environment.sh"
   },
   "keywords": [
     "swarm",
