@@ -27,7 +27,7 @@ async function supplyEther(supplierAccount: HardhatEthersSigner, recepientAddres
     if (!receipt) throw Error('No receipt')
 
     console.log(
-      `Supplying address ${recepientAddress} with Ether from account ${supplierAccount} was successful! \n` +
+      `Supplying address ${recepientAddress} with Ether from account ${supplierAccount.address} was successful! \n` +
         `\tGiven Ether Amount: ${etherAmount}\n` +
         `\tTransaction ID: ${transaction.hash}`,
     )
@@ -49,14 +49,14 @@ async function mintToken(supplierAccount: HardhatEthersSigner, recepientAddress:
     })
 
     console.log(
-      `Supplying address ${recepientAddress} with Token from account ${supplierAccount} was successful! \n` +
+      `Supplying address ${recepientAddress} with Token from account ${supplierAccount.address} was successful! \n` +
         `\tGiven Token Amount: ${tokenAmount}\n` +
         `\tTransaction ID: ${transaction.hash}`,
     )
     console.log('-'.repeat(process.stdout.columns))
   } catch (e) {
     console.error('Supply Token Error', e)
-    throw new Error(`Error happened at supplying address ${recepientAddress} from account ${supplierAccount}`)
+    throw new Error(`Error happened at supplying address ${recepientAddress} from account ${supplierAccount.address}`)
   }
 }
 
