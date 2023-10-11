@@ -129,7 +129,7 @@ fi
 # Wait for blockchain service initializes
 while : ; do
     CHAINID=$(curl -s -X POST -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","method":"eth_chainId","id":1}' http://localhost:9545 | grep "0xfb4")
-    [[ ! -z "$CHAINID" ]] || break
+    [[ ! -z "$CHAINID" ]] && break
     echo "waiting for blockchain service is up..."
     sleep 3
 done
