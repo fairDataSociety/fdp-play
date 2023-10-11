@@ -183,7 +183,7 @@ async function main() {
   const creatorAccount = accounts[0]
   const erc20Token = await ethers.deployContract('ERC20PresetMinterPauser', ['Swarm Token', 'BZZ'])
   await erc20Token.waitForDeployment()
-  const erc20Address = erc20Token.target.toString()
+  const erc20Address = await erc20Token.getAddress()
   printContractAddress('ERC20Token', erc20Address, erc20Token.deploymentTransaction()!.hash)
 
   const swapPriceOracleAddress = await createSwapPriceOracleContract(creatorAccount)

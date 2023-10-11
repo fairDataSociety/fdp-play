@@ -43,11 +43,7 @@ async function mintToken(supplierAccount: HardhatEthersSigner, recepientAddress:
   const instance = await ethers.getContractAt('ERC20PresetMinterPauser', supplierAccount)
   const rawTokenAmount = getRawTokenAmount(tokenAmount)
   try {
-    const transaction = await instance.mint(recepientAddress, rawTokenAmount, {
-      from: supplierAccount,
-      gasLimit: 6721975,
-    })
-
+    const transaction = await instance.mint(recepientAddress, rawTokenAmount)
     await transaction.wait()
 
     console.log(
