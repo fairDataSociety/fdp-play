@@ -36,7 +36,7 @@ Create the common Docker network for the environment with
 To start the blockchain, run the following command in the root directory of the project:
 
 ```sh
-./builder/blockchain/start.sh
+./builder/blockchain/init.sh && ./builder/blockchain/start.sh
 ```
 
 After that, it's possible to deploy Swarm smart contracts
