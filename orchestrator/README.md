@@ -9,7 +9,6 @@ Currently, the repository supports running Bee nodes up to 5 by default.
 ## Maintainers
 
 - [nugaon](https://github.com/nugaon)
-- [Cafe137](https://github.com/Cafe137)
 
 See what "Maintainer" means [here](https://github.com/ethersphere/repo-maintainer).
 
@@ -18,13 +17,13 @@ The whole Bee environment (with blockchain) can be started by [running one scrip
 but for that you need to have the necessary Docker images, which is possible to build yourself by [running some scripts](###Setup-the-environment)
 
 First you may want to set all global variables that the scripts will use.
-For that, there is a [.env](scripts/.env) file which contains all necessary variables that you need.
+For that, there is a [.env](builder/.env) file which contains all necessary variables that you need.
 
 ```sh
-set -a && source ./scripts/.env && set +a
+set -a && source ./builder/.env && set +a
 ```
 
-If you do not set these global variables, the scripts will use those which are available in the [.env](scripts/.env) file.
+If you do not set these global variables, the scripts will use those which are available in the [.env](builder/.env) file.
 
 ## Setup the environment
 
