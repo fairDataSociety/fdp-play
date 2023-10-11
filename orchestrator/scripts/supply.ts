@@ -48,6 +48,8 @@ async function mintToken(supplierAccount: HardhatEthersSigner, recepientAddress:
       gasLimit: 6721975,
     })
 
+    await transaction.wait()
+
     console.log(
       `Supplying address ${recepientAddress} with Token from account ${supplierAccount.address} was successful! \n` +
         `\tGiven Token Amount: ${tokenAmount}\n` +
