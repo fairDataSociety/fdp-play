@@ -47,7 +47,7 @@ stop() {
 queen_failure() {
     docker logs "$QUEEN_CONTAINER_NAME"
     stop_containers
-    echo "Timeout limit has been reached, exit from the process.."
+    echo "Some error occured, exit from the process.."
     exit 1
 }
 
