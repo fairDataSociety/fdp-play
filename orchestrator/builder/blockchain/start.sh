@@ -17,8 +17,9 @@ if [ -z "$CONTAINER_IN_DOCKER" ]; then
         ethereum/client-go --allow-insecure-unlock \
         --unlock 0xCEeE442a149784faa65C35e328CCd64d874F9a02 --password /root/password \
         --mine --miner.etherbase=0xCEeE442a149784faa65C35e328CCd64d874F9a02 \
-        --http --http.api="debug,web3,eth,txpool,net,personal,db" --http.corsdomain=* --http.port=9545 --http.addr=0.0.0.0 \
-        --maxpeers=0 --networkid=4020 --authrpc.vhosts=* --authrpc.addr=0.0.0.0 --http.vhosts=*
+        --http --http.api="debug,web3,eth,txpool,net,personal,db" --http.corsdomain=* --http.port=9545 --http.addr=0.0.0.0 --http.vhosts=* \
+        --ws --ws.api="debug,web3,eth,txpool,net,personal,db" --ws.origins=* --ws.port=9546 --http.addr=0.0.0.0 \
+        --maxpeers=0 --networkid=4020 --authrpc.vhosts=* --authrpc.addr=0.0.0.0
 else
   docker start $NAME
 fi
