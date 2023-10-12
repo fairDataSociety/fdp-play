@@ -3,6 +3,8 @@ import FS from 'fs'
 import Path from 'path'
 import { ethers } from 'hardhat'
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
+import AccessControl from '@openzeppelin/contracts/build/contracts/AccessControl.json'
+import { keccak256 } from 'ethers'
 
 const contractAddressesPath = Path.join(__dirname, '..', 'contract-addresses.json')
 const NETWORK_ID = 4020
@@ -178,6 +180,34 @@ async function createRedistributionContract(
   )
 }
 
+async function updateRoles(
+  postageAddress: string,
+  postagePriceOracleAddress: string,
+  stakeRegistryAddress: string,
+  redistributionAddress: string,
+) {
+  // Change roles on current stamp contract
+  const stamp = await ethers.getContractAt(AccessControl.abi, postageAddress)
+  const redistributorRole = keccak256(new TextEncoder().encode('REDISTRIBUTOR_ROLE'))
+  const tx = await stamp.grantRole(redistributorRole, redistributionAddress)
+  console.log('Changed REDISTRIBUTOR ROLE in Stamp contract to Redistribution contract', tx.hash)
+
+  const oracleRole = keccak256(new TextEncoder().encode('PRICE_ORACLE_ROLE'))
+  const tx2 = await stamp.grantRole(oracleRole, postagePriceOracleAddress)
+  console.log('Changed ORACLE ROLE in Stamp contract to Stamp Price Oracle contract', tx2.hash)
+
+  // Change roles on current oracle contract
+  const oracle = await ethers.getContractAt(AccessControl.abi, postagePriceOracleAddress)
+  const updaterRole = keccak256(new TextEncoder().encode('PRICE_UPDATER_ROLE'))
+  const tx3 = await oracle.grantRole(updaterRole, redistributionAddress)
+  console.log('Changed UPDATER ROLE in Stamp Oracle contract to Redistribution contract', tx3.hash)
+
+  // Change roles on current staking contract
+  const stake = await ethers.getContractAt(AccessControl.abi, stakeRegistryAddress)
+  const tx4 = await stake.grantRole(redistributorRole, redistributionAddress)
+  console.log('Changed REDISTRIBUTOR ROLE in Staking contract to Redistribution contract', tx4.hash)
+}
+
 async function main() {
   const accounts = await ethers.getSigners()
   const creatorAccount = accounts[0]
@@ -188,21 +218,22 @@ async function main() {
 
   const swapPriceOracleAddress = await createSwapPriceOracleContract(creatorAccount)
   const swapFactoryAddress = await createSimpleSwapFactoryContract(creatorAccount, erc20Address)
-  const postageStampAddress = await createPostageStampContract(creatorAccount, erc20Address)
+  const postageAddress = await createPostageStampContract(creatorAccount, erc20Address)
   const postagePriceOracleAddress = await createPostagePriceOracleContract(creatorAccount, erc20Address)
   const stakeRegistryAddress = await createStakeRegistryContract(creatorAccount, erc20Address)
   const redistributionAddress = await createRedistributionContract(
     creatorAccount,
     stakeRegistryAddress,
-    postageStampAddress,
+    postageAddress,
     postagePriceOracleAddress,
   )
+  await updateRoles(postageAddress, postagePriceOracleAddress, stakeRegistryAddress, redistributionAddress)
 
   saveContractAddresses({
     bzzToken: erc20Address,
     swapPriceOrcale: swapPriceOracleAddress,
     swapFactory: swapFactoryAddress,
-    postage: postageStampAddress,
+    postage: postageAddress,
     postagePriceOracle: postagePriceOracleAddress,
     stakeRegistry: stakeRegistryAddress,
     redistribution: redistributionAddress,
