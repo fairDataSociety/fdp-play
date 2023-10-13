@@ -198,7 +198,7 @@ async function updateRoles(
 
   // Change roles on current oracle contract
   const oracle = await ethers.getContractAt(AccessControl.abi, postagePriceOracleAddress)
-  const updaterRole = keccak256(new TextEncoder().encode('PRICE_UPDATER_ROLE'))
+  const updaterRole = keccak256(new TextEncoder().encode('PRICE_UPDATER'))
   const tx3 = await oracle.grantRole(updaterRole, redistributionAddress)
   console.log('Changed UPDATER ROLE in Stamp Oracle contract to Redistribution contract', tx3.hash)
 
