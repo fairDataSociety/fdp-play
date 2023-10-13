@@ -131,7 +131,7 @@ HOSTNAME="127.0.0.1"
 # TODO: take these from contract-addresses.json
 SWAP_FACTORY_ADDRESS="0xCfEB869F69431e42cdB54A4F4f105C19C080A601"
 POSTAGE_STAMP_ADDRESS="0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B"
-PRICE_ORACLE_ADDRESS="0xC89Ce4735882C9F0f0FE26686c53074E09B0D550"
+SWAP_PRICE_ORACLE_ADDRESS="0x5b1869D9A4C187F2EAa108f3062412ecf0526b24"
 REDISTRIBUTION_ADDRESS="0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7"
 STAKING_ADDRESS="0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb"
 
@@ -236,7 +236,7 @@ if [ -z "$QUEEN_CONTAINER_IN_DOCKER" ] || $EPHEMERAL ; then
         --swap-endpoint="http://$SWARM_BLOCKCHAIN_NAME:9545" \
         --swap-factory-address=$SWAP_FACTORY_ADDRESS \
         --postage-stamp-address=$POSTAGE_STAMP_ADDRESS \
-        --price-oracle-address=$PRICE_ORACLE_ADDRESS \
+        --price-oracle-address=$SWAP_PRICE_ORACLE_ADDRESS \
         --staking-address=$STAKING_ADDRESS \
         --redistribution-address=$REDISTRIBUTION_ADDRESS \
         --network-id 4020 \
@@ -287,7 +287,7 @@ for i in $(seq 1 1 "$WORKERS"); do
           --swap-endpoint="http://$SWARM_BLOCKCHAIN_NAME:9545" \
           --swap-factory-address=$SWAP_FACTORY_ADDRESS \
           --postage-stamp-address=$POSTAGE_STAMP_ADDRESS \
-          --price-oracle-address=$PRICE_ORACLE_ADDRESS \
+          --price-oracle-address=$SWAP_PRICE_ORACLE_ADDRESS \
           --staking-address=$STAKING_ADDRESS \
           --redistribution-address=$REDISTRIBUTION_ADDRESS \
           --network-id 4020 \
