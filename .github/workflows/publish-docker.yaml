@@ -64,7 +64,7 @@ jobs:
         if:
           ${{ github.event_name == 'repository_dispatch' || (github.event.inputs.buildImage == 'true' && success())  }}
         run: |
-          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
 
       - uses: actions/cache@v3
         id: cache-npm
