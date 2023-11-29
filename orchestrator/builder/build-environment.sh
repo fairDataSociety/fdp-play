@@ -77,6 +77,7 @@ if $BUILD_BASE_BEE ; then
 fi
 "$MY_PATH/network.sh"
 "$MY_PATH/blockchain/start.sh"
+sleep 3
 npm run migrate:contracts
 npm run supply
 chmod -R 777 "$MY_PATH/bee-data-dirs/"
