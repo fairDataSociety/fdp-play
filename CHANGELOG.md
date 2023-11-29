@@ -1,5 +1,26 @@
 # Changelog
 
+## [3.0.0](https://github.com/fairDataSociety/fdp-play/compare/v2.2.0...v3.0.0) (2023-11-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* geth blockchain and hardhat ([#105](https://github.com/fairDataSociety/fdp-play/issues/105))
+
+### Features
+
+* bee 1.17.2 ([#97](https://github.com/fairDataSociety/fdp-play/issues/97)) ([1fea708](https://github.com/fairDataSociety/fdp-play/commit/1fea708aa9610d79ba031e7127cf50d8adedee23))
+* geth blockchain and hardhat ([#105](https://github.com/fairDataSociety/fdp-play/issues/105)) ([6d6da0b](https://github.com/fairDataSociety/fdp-play/commit/6d6da0b19a9b014bb11b396a8d62c2d65774a0c0))
+* phase4 redis ([#102](https://github.com/fairDataSociety/fdp-play/issues/102)) ([c6a6f7f](https://github.com/fairDataSociety/fdp-play/commit/c6a6f7fd94f1f4fe7a53d8003a63cef60aea7a3e))
+
+
+### Bug Fixes
+
+* byte updates ([a9a01aa](https://github.com/fairDataSociety/fdp-play/commit/a9a01aa6da9ca6435b3964f39ab4d19ddc23cf94))
+* contract migration for the new bytecode ([0a6f877](https://github.com/fairDataSociety/fdp-play/commit/0a6f877827ab23baac0e842b726e3d2eaeecd902))
+* update contract addresses ([548bc22](https://github.com/fairDataSociety/fdp-play/commit/548bc22d86a7177ba239fb568de3c64d0bc69d0e))
+* update contracts bytecode ([1aa9ee2](https://github.com/fairDataSociety/fdp-play/commit/1aa9ee28ed5610da74b8b2b895dafdd553eace7e))
+
 ## [2.2.0](https://github.com/fairDataSociety/fdp-play/compare/v2.1.1...v2.2.0) (2023-06-07)
 
 
