@@ -76,8 +76,12 @@ if $BUILD_BASE_BEE ; then
     build_bee
 fi
 "$MY_PATH/network.sh"
+"$MY_PATH/blockchain/init.sh"
 "$MY_PATH/blockchain/start.sh"
-sleep 3
+SLEEP_TIME=5
+echo "wait $SLEEP_TIME seconds for blockchain connection"
+sleep $SLEEP_TIME
+docker logs fdp-play-blockchain
 npm run migrate:contracts
 npm run supply
 chmod -R 777 "$MY_PATH/bee-data-dirs/"
