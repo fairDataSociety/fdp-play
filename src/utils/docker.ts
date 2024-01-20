@@ -141,6 +141,29 @@ export class Docker {
   public async startBlockchainNode(options: RunOptions): Promise<void> {
     if (options.fresh) await this.removeContainer(this.blockchainName)
 
+    // must be the same as in orchestrator/builder/blockchain/start.sh
+    const cmdArgs = [
+      '--allow-insecure-unlock',
+      '--unlock=0xCEeE442a149784faa65C35e328CCd64d874F9a02',
+      '--password=/root/password',
+      '--mine',
+      '--miner.etherbase=0xCEeE442a149784faa65C35e328CCd64d874F9a02',
+      '--http',
+      '--http.api="debug,web3,eth,txpool,net,personal"',
+      '--http.corsdomain=*',
+      '--http.port=9545',
+      '--http.addr=0.0.0.0',
+      '--http.vhosts=*',
+      '--ws',
+      '--ws.api="debug,web3,eth,txpool,net,personal"',
+      '--ws.port=9546',
+      '--ws.origins=*',
+      '--maxpeers=0',
+      '--networkid=4020',
+      '--authrpc.vhosts=*',
+      '--authrpc.addr=0.0.0.0',
+    ]
+
     const container = await this.findOrCreateContainer(
       this.blockchainName,
       {
@@ -149,6 +172,7 @@ export class Docker {
         ExposedPorts: {
           '9545/tcp': {},
         },
+        Cmd: cmdArgs,
         AttachStderr: false,
         AttachStdout: false,
         HostConfig: {
