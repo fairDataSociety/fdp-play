@@ -166,7 +166,7 @@ describe('start command', () => {
       console.log('(before) Waiting for the postage stamp to be usable')
       await waitForUsablePostageStamp(beeDebug, postage)
       data = `hello from ${Date.now()}`
-      reference = (await bee.uploadData(postage, data)).reference
+      reference = (await bee.uploadData(postage, data, { deferred: false })).reference
 
       // Lets just verify that it the current container has the data
       expect((await bee.downloadData(reference)).text()).toEqual(data)
