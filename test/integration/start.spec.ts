@@ -182,7 +182,7 @@ describe('start command', () => {
         await run(['start', '--fresh', '--detach'])
 
         console.log('(test) Trying to fetch the data')
-        await expect(bee.downloadData(reference)).rejects.toHaveProperty('status', 500)
+        await expect(bee.downloadData(reference, { timeout: 1000 })).rejects.toHaveProperty('status', 404)
       }),
     )
   })
