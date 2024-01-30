@@ -183,7 +183,7 @@ describe('start command', () => {
 
         console.log('(test) Trying to fetch the data')
         // TODO check response status
-        await expect(bee.downloadData(reference, { timeout: 1000 })).rejects
+        expect(await bee.downloadData(reference, { timeout: 1000 })).toThrowError()
       }),
     )
   })
