@@ -30,7 +30,7 @@ export default async (): Promise<Config.InitialOptions> => {
     // The root directory that Jest should scan for tests and modules within
     rootDir: 'test',
     // Increase timeout since we are spinning Bee containers
-    testTimeout: 4 * 60 * 1000,
+    testTimeout: 7 * 60 * 1000,
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
     testPathIgnorePatterns: ['/node_modules/'],
