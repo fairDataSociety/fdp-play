@@ -182,10 +182,9 @@ describe('start command', () => {
         await run(['start', '--fresh', '--detach'])
 
         console.log('(test) Trying to fetch the data')
-        // TODO check response status
         // locally 'timeout of 1000ms exceeded'
         // ci 'Request failed with status code 404'
-        expect(async () => await bee.downloadData(reference, { timeout: 1000 })).toThrow()
+        expect(bee.downloadData(reference, { timeout: 1000 })).rejects.toBeTruthy()
       }),
     )
   })
