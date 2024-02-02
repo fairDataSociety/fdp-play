@@ -24,6 +24,7 @@ describeCommand('stop command', ({ getLastMessage }) => {
 
   it('should send ether and update balance', async () => {
     const wallet = ethers.Wallet.createRandom()
+    const blockTime = 6000 // more than one block time in fdp-play
 
     await run(['eth', 'balance', wallet.address])
     expect(getLastMessage()).toBe('0.0 ETH')
@@ -31,7 +32,7 @@ describeCommand('stop command', ({ getLastMessage }) => {
     await run(['eth', 'send', '--to', wallet.address, '--amount', '0.1'])
     expect(getLastMessage()).toContain('TxId')
 
-    await sleep(2000) // more than one block time in Ganache
+    await sleep(blockTime)
 
     await run(['eth', 'balance', wallet.address])
     expect(getLastMessage()).toBe('0.1 ETH')
@@ -39,7 +40,7 @@ describeCommand('stop command', ({ getLastMessage }) => {
     await run(['eth', 'send', '--to', wallet.address, '--amount', '0.9'])
     expect(getLastMessage()).toContain('TxId')
 
-    await sleep(2000) // more than one block time in Ganache
+    await sleep(blockTime)
 
     await run(['eth', 'balance', wallet.address])
     expect(getLastMessage()).toBe('1.0 ETH')
