@@ -65,10 +65,10 @@ $ fdp-play stop
 $ fdp-play start
 
 # Send ETH to any address
-$ fdp-play eth send --to 0xD2934934181720d2f17D37CBcB421dbEa3d3f805 -a 0.5
+$ fdp-play eth send --to 0xCEeE442a149784faa65C35e328CCd64d874F9a02 -a 0.5
 
 # Query the ETH balance of any Ethereum address
-$ fdp-play eth balance 0xD2934934181720d2f17D37CBcB421dbEa3d3f805
+$ fdp-play eth balance 0xCEeE442a149784faa65C35e328CCd64d874F9a02
 ```
 
 For more details see the `--help` page of the CLI and its commands.

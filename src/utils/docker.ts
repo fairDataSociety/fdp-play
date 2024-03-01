@@ -171,12 +171,13 @@ export class Docker {
         name: this.blockchainName,
         ExposedPorts: {
           '9545/tcp': {},
+          '9546/tcp': {},
         },
         Cmd: cmdArgs,
         AttachStderr: false,
         AttachStdout: false,
         HostConfig: {
-          PortBindings: { '9545/tcp': [{ HostPort: '9545' }] },
+          PortBindings: { '9545/tcp': [{ HostPort: '9545' }], '9546/tcp': [{ HostPort: '9546' }] },
           NetworkMode: this.networkName,
         },
       },
