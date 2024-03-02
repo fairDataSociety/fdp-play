@@ -8,7 +8,7 @@ import { describeCommand } from '../utils/console-log'
 import { sleep } from '../../src/utils'
 
 describeCommand('stop command', ({ getLastMessage }) => {
-  const envPrefix = `bee-factory-test-${crypto.randomBytes(4).toString('hex')}`
+  const envPrefix = `bee-play-test-${crypto.randomBytes(4).toString('hex')}`
 
   beforeAll(async () => {
     // This will force Bee Factory to create
@@ -46,12 +46,12 @@ describeCommand('stop command', ({ getLastMessage }) => {
     expect(getLastMessage()).toBe('1.0 ETH')
 
     await run(['eth', 'send', '--to', wallet.address, '--amount', '100000000000000'])
-    expect(getLastMessage()).toContain('Cannot execute transaction: insufficient funds')
+    expect(getLastMessage()).toContain('insufficient funds for transfer')
 
     await run(['eth', 'send', '--to', '0xD293493418172', '--amount', '100000000000000'])
-    expect(getLastMessage()).toContain('Cannot execute transaction: invalid address')
+    expect(getLastMessage()).toContain('Cannot execute transaction: jsonrpc: -32602')
 
     await run(['eth', 'balance', '0xD293493418172'])
-    expect(getLastMessage()).toContain('invalid address')
+    expect(getLastMessage()).toContain('jsonrpc: -32602')
   })
 })
