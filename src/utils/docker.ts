@@ -328,12 +328,15 @@ export class Docker {
       throw new Error('Queen container does not exists, even though it should have had!')
     }
 
-    const logs = await container.logs({ stdout: true, stderr: true, follow, tail })
+    // FIXME: create GitHub issue in dockerode about it
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const logs = await container.logs({ stdout: true, stderr: true, follow, tail } as any)
 
     if (!follow) {
       outputStream.write(logs as unknown as Buffer)
     } else {
-      logs.pipe(outputStream)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(logs as any).pipe(outputStream)
     }
   }
 
