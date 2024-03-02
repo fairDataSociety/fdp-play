@@ -46,10 +46,10 @@ describeCommand('stop command', ({ getLastMessage }) => {
     expect(getLastMessage()).toBe('1.0 ETH')
 
     await run(['eth', 'send', '--to', wallet.address, '--amount', '100000000000000'])
-    expect(getLastMessage()).toContain('insufficient funds for transfer')
+    expect(getLastMessage()).toContain('jsonrpc: -32000 - insufficient funds for transfer')
 
     await run(['eth', 'send', '--to', '0xD293493418172', '--amount', '100000000000000'])
-    expect(getLastMessage()).toContain('Cannot execute transaction: jsonrpc: -32602')
+    expect(getLastMessage()).toContain('jsonrpc: -32602')
 
     await run(['eth', 'balance', '0xD293493418172'])
     expect(getLastMessage()).toContain('jsonrpc: -32602')
