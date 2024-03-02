@@ -329,6 +329,7 @@ export class Docker {
     }
 
     // FIXME: create GitHub issue in dockerode about it
+    // prettier-ignore
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const logs = await container.logs({ stdout: true, stderr: true, follow, tail } as any)
 

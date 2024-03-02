@@ -10,6 +10,7 @@ type ReqSendTransaction = {
 
 export class Account {
   // FIXME: create GitHub issue about this prettier problem
+  // prettier-ignore
   // eslint-disable-next-line
   constructor(private signer: Signer, private rpcClient: JsonRpc) {}
 
