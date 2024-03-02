@@ -9,6 +9,8 @@ type ReqSendTransaction = {
 }
 
 export class Account {
+  // FIXME: create GitHub issue about this prettier problem
+  // eslint-disable-next-line
   constructor(private signer: Signer, private rpcClient: JsonRpc) {}
 
   // returns back the hash of the transaction
