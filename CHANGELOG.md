@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/fairDataSociety/fdp-play/compare/v3.0.0...v3.0.1) (2024-03-03)
+
+
+### Bug Fixes
+
+* biggest painpoints ([#111](https://github.com/fairDataSociety/fdp-play/issues/111)) ([62cc552](https://github.com/fairDataSociety/fdp-play/commit/62cc552537b6df40ba35df7b497e4dc0d7064103))
+
 ## [3.0.0](https://github.com/fairDataSociety/fdp-play/compare/v2.2.0...v3.0.0) (2023-11-29)
 
 
