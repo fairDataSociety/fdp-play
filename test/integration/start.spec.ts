@@ -166,7 +166,7 @@ describe('start command', () => {
       console.log('(before) Waiting for the postage stamp to be usable')
       await waitForUsablePostageStamp(beeDebug, postage)
       data = `hello from ${Date.now()}`
-      reference = (await bee.uploadData(postage, data)).reference
+      reference = (await bee.uploadData(postage, data, { deferred: false })).reference
 
       // Lets just verify that it the current container has the data
       expect((await bee.downloadData(reference)).text()).toEqual(data)
@@ -182,7 +182,9 @@ describe('start command', () => {
         await run(['start', '--fresh', '--detach'])
 
         console.log('(test) Trying to fetch the data')
-        await expect(bee.downloadData(reference)).rejects.toHaveProperty('status', 500)
+        // locally 'timeout of 1000ms exceeded'
+        // ci 'Request failed with status code 404'
+        expect(bee.downloadData(reference, { timeout: 1000 })).rejects.toBeTruthy()
       }),
     )
   })

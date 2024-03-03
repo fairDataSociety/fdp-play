@@ -8,7 +8,7 @@ import { findContainer } from '../utils/docker'
 
 describe('stop command', () => {
   let docker: Dockerode
-  const envPrefix = `bee-factory-test-${crypto.randomBytes(4).toString('hex')}`
+  const envPrefix = `bee-play-test-${crypto.randomBytes(4).toString('hex')}`
 
   beforeAll(() => {
     docker = new Dockerode()

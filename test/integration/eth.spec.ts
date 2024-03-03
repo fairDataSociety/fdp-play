@@ -8,7 +8,7 @@ import { describeCommand } from '../utils/console-log'
 import { sleep } from '../../src/utils'
 
 describeCommand('stop command', ({ getLastMessage }) => {
-  const envPrefix = `bee-factory-test-${crypto.randomBytes(4).toString('hex')}`
+  const envPrefix = `bee-play-test-${crypto.randomBytes(4).toString('hex')}`
 
   beforeAll(async () => {
     // This will force Bee Factory to create
@@ -24,6 +24,7 @@ describeCommand('stop command', ({ getLastMessage }) => {
 
   it('should send ether and update balance', async () => {
     const wallet = ethers.Wallet.createRandom()
+    const blockTime = 6000 // more than one block time in fdp-play
 
     await run(['eth', 'balance', wallet.address])
     expect(getLastMessage()).toBe('0.0 ETH')
@@ -31,7 +32,7 @@ describeCommand('stop command', ({ getLastMessage }) => {
     await run(['eth', 'send', '--to', wallet.address, '--amount', '0.1'])
     expect(getLastMessage()).toContain('TxId')
 
-    await sleep(2000) // more than one block time in Ganache
+    await sleep(blockTime)
 
     await run(['eth', 'balance', wallet.address])
     expect(getLastMessage()).toBe('0.1 ETH')
@@ -39,18 +40,18 @@ describeCommand('stop command', ({ getLastMessage }) => {
     await run(['eth', 'send', '--to', wallet.address, '--amount', '0.9'])
     expect(getLastMessage()).toContain('TxId')
 
-    await sleep(2000) // more than one block time in Ganache
+    await sleep(blockTime)
 
     await run(['eth', 'balance', wallet.address])
     expect(getLastMessage()).toBe('1.0 ETH')
 
     await run(['eth', 'send', '--to', wallet.address, '--amount', '100000000000000'])
-    expect(getLastMessage()).toContain('Cannot execute transaction: insufficient funds')
+    expect(getLastMessage()).toContain('jsonrpc: -32000 - insufficient funds for transfer')
 
     await run(['eth', 'send', '--to', '0xD293493418172', '--amount', '100000000000000'])
-    expect(getLastMessage()).toContain('Cannot execute transaction: invalid address')
+    expect(getLastMessage()).toContain('jsonrpc: -32602')
 
     await run(['eth', 'balance', '0xD293493418172'])
-    expect(getLastMessage()).toContain('invalid address')
+    expect(getLastMessage()).toContain('jsonrpc: -32602')
   })
 })

@@ -3,6 +3,7 @@ import * as ethers from 'ethers'
 import { EthCommand } from './eth-command'
 import { isNumberString } from '../../utils/types'
 import { CommandLineError } from '../../utils/error'
+import { BLOCKCHAIN_WALLET_ADDR } from '../../constants'
 
 export class Send extends EthCommand implements LeafCommand {
   public readonly name = 'send'
@@ -21,18 +22,18 @@ export class Send extends EthCommand implements LeafCommand {
   @Option({
     key: 'to',
     type: 'string',
-    description: 'The ethereum address of the recipient.',
+    description: 'The Ethereum address of the recipient.',
     required: true,
   })
   public to!: string
 
   @Option({
     key: 'from',
-    type: 'number',
-    description: 'The account index from which the coins will be sent.',
-    default: 0,
+    type: 'string',
+    description: 'The wallet address from which the coins will be sent.',
+    default: BLOCKCHAIN_WALLET_ADDR,
   })
-  public from!: number
+  public from!: string
 
   public async run(): Promise<void> {
     await super.init()
@@ -49,14 +50,16 @@ export class Send extends EthCommand implements LeafCommand {
 
     const tx = {
       to: this.to,
-      value: ethers.utils.parseEther(this.amount),
+      value: '0x' + BigInt(ethers.utils.parseEther(this.amount).toString()).toString(16),
     }
+
     try {
       const response = await account.sendTransaction(tx)
       this.console.info(`${this.amount} ETH has been sent to ${this.to}.`)
-      this.console.log(`TxId: ${response.hash}`)
+      this.console.log(`TxId: ${response}`)
     } catch (e) {
-      throw new CommandLineError(`Cannot execute transaction: ${(e as Error).message}`)
+      const errMessage = (e as Error).message || e
+      throw new CommandLineError(`Cannot execute transaction: ${errMessage}`)
     }
   }
 }

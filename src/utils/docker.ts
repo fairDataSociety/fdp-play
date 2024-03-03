@@ -141,6 +141,29 @@ export class Docker {
   public async startBlockchainNode(options: RunOptions): Promise<void> {
     if (options.fresh) await this.removeContainer(this.blockchainName)
 
+    // must be the same as in orchestrator/builder/blockchain/start.sh
+    const cmdArgs = [
+      '--allow-insecure-unlock',
+      '--unlock=0xCEeE442a149784faa65C35e328CCd64d874F9a02',
+      '--password=/root/password',
+      '--mine',
+      '--miner.etherbase=0xCEeE442a149784faa65C35e328CCd64d874F9a02',
+      '--http',
+      '--http.api="debug,web3,eth,txpool,net,personal"',
+      '--http.corsdomain=*',
+      '--http.port=9545',
+      '--http.addr=0.0.0.0',
+      '--http.vhosts=*',
+      '--ws',
+      '--ws.api="debug,web3,eth,txpool,net,personal"',
+      '--ws.port=9546',
+      '--ws.origins=*',
+      '--maxpeers=0',
+      '--networkid=4020',
+      '--authrpc.vhosts=*',
+      '--authrpc.addr=0.0.0.0',
+    ]
+
     const container = await this.findOrCreateContainer(
       this.blockchainName,
       {
@@ -148,11 +171,13 @@ export class Docker {
         name: this.blockchainName,
         ExposedPorts: {
           '9545/tcp': {},
+          '9546/tcp': {},
         },
+        Cmd: cmdArgs,
         AttachStderr: false,
         AttachStdout: false,
         HostConfig: {
-          PortBindings: { '9545/tcp': [{ HostPort: '9545' }] },
+          PortBindings: { '9545/tcp': [{ HostPort: '9545' }], '9546/tcp': [{ HostPort: '9546' }] },
           NetworkMode: this.networkName,
         },
       },
@@ -303,12 +328,16 @@ export class Docker {
       throw new Error('Queen container does not exists, even though it should have had!')
     }
 
-    const logs = await container.logs({ stdout: true, stderr: true, follow, tail })
+    // FIXME: create GitHub issue in dockerode about it
+    // prettier-ignore
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const logs = await container.logs({ stdout: true, stderr: true, follow, tail } as any)
 
     if (!follow) {
       outputStream.write(logs as unknown as Buffer)
     } else {
-      logs.pipe(outputStream)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(logs as any).pipe(outputStream)
     }
   }
 
