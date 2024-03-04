@@ -66,7 +66,7 @@ jobs:
         run: |
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         id: cache-npm
         with:
           path: orchestrator/node_modules
