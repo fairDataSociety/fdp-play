@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/fairDataSociety/fdp-play/compare/v3.0.1...v3.1.0) (2024-03-20)
+
+
+### Features
+
+* fdp contracts option ([#123](https://github.com/fairDataSociety/fdp-play/issues/123)) ([147d41d](https://github.com/fairDataSociety/fdp-play/commit/147d41da27391aa40851b0159ee9f30ccd943860))
+
 ## [3.0.1](https://github.com/fairDataSociety/fdp-play/compare/v3.0.0...v3.0.1) (2024-03-03)
 
 
