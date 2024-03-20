@@ -43,6 +43,9 @@ $ fdp-play start -d --bee-version 1.6.1
 # This spins up the environment without Bee nodes
 $ fdp-play start --without-bees
 
+# Starts the blockchain with FDP Contracts
+$ fdp-play start --fdp-contracts
+
 # Or start a fairOS instance that will use the Queen Bee node.
 $ fdp-play start --fairos
 

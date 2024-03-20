@@ -12,7 +12,7 @@ import { waitForBlockchain, waitForQueen, waitForWorkers } from '../utils/wait'
 import ora from 'ora'
 import { VerbosityLevel } from './root-command/logging'
 import { stripCommit } from '../utils/config-sources'
-import { DEFAULT_BLOCKCHAIN_IMAGE, DEFAULT_FAIROS_IMAGE, ENV_ENV_PREFIX_KEY } from '../constants'
+import { DEFAULT_BLOCKCHAIN_IMAGE, DEFAULT_FAIROS_IMAGE, ENV_ENV_PREFIX_KEY, FDP_BLOCKCHAIN_IMAGE } from '../constants'
 
 const DEFAULT_BEE_REPO = 'fairdatasociety'
 const ENV_IMAGE_PREFIX_KEY = 'FDP_PLAY_IMAGE_PREFIX'
@@ -78,9 +78,17 @@ export class Start extends RootCommand implements LeafCommand {
     type: 'string',
     description: 'Docker image name of the used blockchain',
     envKey: 'FDP_PLAY_BLOCKCHAIN_IMAGE',
-    default: DEFAULT_BLOCKCHAIN_IMAGE,
   })
   public blockchainImageName!: string
+
+  @Option({
+    key: 'fdp-contracts',
+    type: 'boolean',
+    description: 'Blockchain includes FDP Contracts',
+    default: false,
+    conflicts: 'blockchain-image',
+  })
+  public fdpContracts!: boolean
 
   @Option({
     key: 'bee-image-prefix',
@@ -137,6 +145,8 @@ export class Start extends RootCommand implements LeafCommand {
     }
 
     this.beeVersion = stripCommit(this.beeVersion)
+
+    this.setBlockchainImage()
 
     const dockerOptions = this.buildDockerOptions()
     const docker = new Docker({
@@ -284,6 +294,14 @@ export class Start extends RootCommand implements LeafCommand {
 
     if (!this.detach) {
       await docker.logs(ContainerType.QUEEN, process.stdout, true)
+    }
+  }
+
+  private setBlockchainImage() {
+    if (this.fdpContracts || this.fairos) {
+      this.blockchainImageName = FDP_BLOCKCHAIN_IMAGE
+    } else {
+      this.blockchainImageName ||= DEFAULT_BLOCKCHAIN_IMAGE
     }
   }
 
