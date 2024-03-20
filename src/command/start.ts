@@ -147,7 +147,7 @@ export class Start extends RootCommand implements LeafCommand {
 
     this.beeVersion = stripCommit(this.beeVersion)
 
-    if (this.fdpContracts) {
+    if (this.fdpContracts || this.fairos) {
       this.blockchainImageName = FDP_BLOCKCHAIN_IMAGE
     }
 
