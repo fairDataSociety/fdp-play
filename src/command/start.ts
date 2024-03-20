@@ -78,7 +78,6 @@ export class Start extends RootCommand implements LeafCommand {
     type: 'string',
     description: 'Docker image name of the used blockchain',
     envKey: 'FDP_PLAY_BLOCKCHAIN_IMAGE',
-    default: DEFAULT_BLOCKCHAIN_IMAGE,
   })
   public blockchainImageName!: string
 
@@ -147,9 +146,7 @@ export class Start extends RootCommand implements LeafCommand {
 
     this.beeVersion = stripCommit(this.beeVersion)
 
-    if (this.fdpContracts || this.fairos) {
-      this.blockchainImageName = FDP_BLOCKCHAIN_IMAGE
-    }
+    this.setBlockchainImage()
 
     const dockerOptions = this.buildDockerOptions()
     const docker = new Docker({
@@ -297,6 +294,14 @@ export class Start extends RootCommand implements LeafCommand {
 
     if (!this.detach) {
       await docker.logs(ContainerType.QUEEN, process.stdout, true)
+    }
+  }
+
+  private setBlockchainImage() {
+    if (this.fdpContracts || this.fairos) {
+      this.blockchainImageName = FDP_BLOCKCHAIN_IMAGE
+    } else {
+      this.blockchainImageName ||= DEFAULT_BLOCKCHAIN_IMAGE
     }
   }
 
