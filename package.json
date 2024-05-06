@@ -63,7 +63,7 @@
     "@commitlint/config-conventional": "^17.0.2",
     "@fluffy-spoon/substitute": "^1.208.0",
     "@jest/types": "^28.1.0",
-    "@types/dockerode": "^3.3.24",
+    "@types/dockerode": "^3.3.29",
     "@types/jest": "^27.4.1",
     "@types/node": "^18.11.8",
     "@types/terser-webpack-plugin": "^5.2.0",
