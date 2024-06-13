@@ -21,5 +21,11 @@ const getRandomValuesNode = <T extends ArrayBufferView | null>(array: T): T => {
 }
 
 if (isNode && globalThis) {
-  globalThis.crypto = { ...globalThis.crypto, getRandomValues: getRandomValuesNode }
+  if (!globalThis.crypto) {
+    globalThis.crypto = {} as Crypto;
+  }
+
+  if (!globalThis.crypto.getRandomValues) {
+    globalThis.crypto.getRandomValues = getRandomValuesNode;
+  }
 }
