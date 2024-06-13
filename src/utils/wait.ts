@@ -1,4 +1,4 @@
-import { default as __fetch, FetchError } from 'node-fetch'
+import fetch, { FetchError } from 'node-fetch'
 import { sleep } from './index'
 import { TimeoutError } from './error'
 import { BeeDebug } from '@ethersphere/bee-js'
@@ -40,7 +40,7 @@ function isAllowedError(e: FetchError): boolean {
 export async function waitForBlockchain(waitingIterations = 30): Promise<void> {
   for (let i = 0; i < waitingIterations; i++) {
     try {
-      const request = await __fetch('http://127.0.0.1:9545', {
+      const request = await fetch('http://127.0.0.1:9545', {
         method: 'POST',
         body: BLOCKCHAIN_BODY_REQUEST,
         headers: { 'Content-Type': 'application/json' },
