@@ -48,7 +48,7 @@
     "dockerode": "^4.0.2",
     "ethers": "^5.7.2",
     "furious-commander": "^1.7.1",
-    "node-fetch": "2",
+    "node-fetch": "^2",
     "ora": "^5.3.0"
   },
   "devDependencies": {
