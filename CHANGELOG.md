@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.1.0](https://github.com/fairDataSociety/fdp-play/compare/v3.0.1...v3.1.0) (2024-06-14)
+
+
+### Features
+
+* fdp contracts option ([#123](https://github.com/fairDataSociety/fdp-play/issues/123)) ([147d41d](https://github.com/fairDataSociety/fdp-play/commit/147d41da27391aa40851b0159ee9f30ccd943860))
+
+
+### Bug Fixes
+
+* node 20 support ([#141](https://github.com/fairDataSociety/fdp-play/issues/141)) ([d615c01](https://github.com/fairDataSociety/fdp-play/commit/d615c0155cae4c06cf1980462c3ca69a3eec2bfc))
+* node fetch ([#144](https://github.com/fairDataSociety/fdp-play/issues/144)) ([ef6d623](https://github.com/fairDataSociety/fdp-play/commit/ef6d623c33d8837f21904e785b6493593d47ba9e))
+
 ## [3.0.1](https://github.com/fairDataSociety/fdp-play/compare/v3.0.0...v3.0.1) (2024-03-03)
 
 

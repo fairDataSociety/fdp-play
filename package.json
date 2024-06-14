@@ -1,6 +1,6 @@
 {
   "name": "@fairdatasociety/fdp-play",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Orchestration CLI for spinning up local development Bee cluster and FDP environment with Docker",
   "keywords": [
     "bee",
@@ -70,6 +70,7 @@
     "@types/terser-webpack-plugin": "^5.2.0",
     "@types/webpack": "^5.28.0",
     "@types/webpack-bundle-analyzer": "^4.4.1",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
     "babel-jest": "^29.2.2",
     "babel-loader": "^9.1.3",
     "depcheck": "^1.4.3",
