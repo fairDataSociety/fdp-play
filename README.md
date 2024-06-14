@@ -2,8 +2,8 @@
 
 [![Tests](https://github.com/fairDataSociety/fdp-play/actions/workflows/test.yaml/badge.svg)](https://github.com/fairDataSociety/fdp-play/actions/workflows/test.yaml)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
-![](https://img.shields.io/badge/npm-%3E%3D6.9.0-orange.svg?style=flat-square)
-![](https://img.shields.io/badge/Node.js-%3E%3D12.0.0-orange.svg?style=flat-square)
+![](https://img.shields.io/badge/npm-%3E%3D8.1.0-orange.svg?style=flat-square)
+![](https://img.shields.io/badge/Node.js-%3E%3D16.0.0-orange.svg?style=flat-square)
 
 > CLI tool to spin up local development Bee cluster and FDP environment with Docker
 
