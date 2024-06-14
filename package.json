@@ -66,6 +66,7 @@
     "@types/dockerode": "^3.3.24",
     "@types/jest": "^27.4.1",
     "@types/node": "^18.11.8",
+    "@types/node-fetch": "^2.6.11",
     "@types/terser-webpack-plugin": "^5.2.0",
     "@types/webpack": "^5.28.0",
     "@types/webpack-bundle-analyzer": "^4.4.1",
