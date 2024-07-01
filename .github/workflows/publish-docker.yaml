@@ -97,10 +97,10 @@ jobs:
         run: |
           cd ./orchestrator
           PUBLISH_PARAMS=""
-          if [ $LATEST == 'true' ] ; then
+          if [ "$LATEST" = 'true' ]; then
             PUBLISH_PARAMS+=" --latest"
           fi
-          if [ $PUBLISH_PARAMS != "" ] ; then
+          if [ -n "$PUBLISH_PARAMS" ]; then
             PUBLISH_PARAMS="-- $PUBLISH_PARAMS"
           fi
           npm run publish:env $PUBLISH_PARAMS
