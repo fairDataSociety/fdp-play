@@ -43,12 +43,8 @@ MY_PATH=$(dirname "$0")
 MY_PATH=$( cd "$MY_PATH" && pwd )
 COMMIT_HASH=HEAD
 BUILD_BASE_BEE=false
-CHEQUES_COUNT=1
 # Bee version here means the base bee version on which the images will be built
 BEE_VERSION=$("$MY_PATH/utils/env-variable-value.sh" BEE_VERSION)
-BLOCKCHAIN_VERSION=$("$MY_PATH/utils/env-variable-value.sh" BLOCKCHAIN_VERSION)
-
-SUPPORTED_WORKER_N=4
 
 # handle passed options
 while [ $# -gt 0 ]
