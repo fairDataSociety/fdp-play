@@ -14,7 +14,7 @@ CONTAINER_IN_DOCKER=$(docker container ls -qaf name=$NAME)
 
 if [ -z "$CONTAINER_IN_DOCKER" ]; then
     docker run -p 9545:9545 --network $NETWORK --name $NAME -v "$MY_PATH:/root" -d \
-        ethereum/client-go:stable --allow-insecure-unlock \
+        ethereum/client-go:release-1.13 --allow-insecure-unlock \
         --unlock 0xCEeE442a149784faa65C35e328CCd64d874F9a02 --password /root/password \
         --mine --miner.etherbase=0xCEeE442a149784faa65C35e328CCd64d874F9a02 \
         --http --http.api="debug,web3,eth,txpool,net,personal" --http.corsdomain=* --http.port=9545 --http.addr=0.0.0.0 --http.vhosts=* \
