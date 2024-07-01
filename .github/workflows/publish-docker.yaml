@@ -81,13 +81,13 @@ jobs:
         run: |
           cd ./orchestrator
           BUILD_PARAMS=""
-          if [ $BUILD_IMAGE == 'true' ] ; then
+          if [ "$BUILD_IMAGE" = 'true' ]; then
             BUILD_PARAMS+=" --build-base-bee --base-bee-commit-hash=$BEE_VERSION"
           fi
-          if [ $STATE_COMMIT == 'true' ] ; then
+          if [ "$STATE_COMMIT" = 'true' ]; then
             BUILD_PARAMS+=" --gen-traffic"
           fi
-          if [ $BUILD_PARAMS != "" ] ; then
+          if [ -n "$BUILD_PARAMS" ]; then
             BUILD_PARAMS="-- $BUILD_PARAMS"
           fi
           npm run build:env $BUILD_PARAMS
@@ -97,10 +97,10 @@ jobs:
         run: |
           cd ./orchestrator
           PUBLISH_PARAMS=""
-          if [ $LATEST == 'true' ] ; then
+          if [ "$LATEST" = 'true' ]; then
             PUBLISH_PARAMS+=" --latest"
           fi
-          if [ $PUBLISH_PARAMS != "" ] ; then
+          if [ -n "$PUBLISH_PARAMS" ]; then
             PUBLISH_PARAMS="-- $PUBLISH_PARAMS"
           fi
           npm run publish:env $PUBLISH_PARAMS
