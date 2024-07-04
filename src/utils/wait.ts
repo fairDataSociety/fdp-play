@@ -63,7 +63,7 @@ export async function waitForBlockchain(waitingIterations = 30): Promise<void> {
 }
 
 export async function waitForQueen(verifyQueenIsUp: () => Promise<boolean>, waitingIterations = 120): Promise<string> {
-  const beeDebug = new BeeDebug('http://127.0.0.1:1635')
+  const beeDebug = new BeeDebug('http://127.0.0.1:1633')
 
   for (let i = 0; i < waitingIterations; i++) {
     try {
@@ -97,7 +97,7 @@ export async function waitForWorkers(
   getStatus: () => Promise<AllStatus>,
   waitingIterations = 120,
 ): Promise<void> {
-  const beeDebug = new BeeDebug('http://127.0.0.1:1635')
+  const beeDebug = new BeeDebug('http://127.0.0.1:1633')
 
   const status = await getStatus()
   for (let i = 1; i <= workerCount; i++) {

@@ -17,9 +17,9 @@ PARAMETERS:
     --ephemeral                 create ephemeral container for bee-client. Data won't be persisted.
     --workers=number            all Bee nodes in the test environment. Default is 4.
     --port-maps=number          map ports of the cluster nodes to the hosting machine in the following manner:
-                                1. 1633:1635
-                                2. 11633:11635
-                                3. 21633:21635 (...)
+                                1. 1633:1634
+                                2. 11633:11634
+                                3. 21633:21634 (...)
                                 number represents the nodes number to map from. Default is 2.
     --password=string           password for Bee client(s).
     --own-image                 If passed, the used Docker image names will be identical as the name of the workers.
@@ -73,7 +73,7 @@ fetch_queen_underlay_addr() {
     TIMEOUT=$((2*12*WAITING_TIME))
     while (( TIMEOUT > ELAPSED_TIME )) ; do
         check_queen_is_running
-        QUEEN_UNDERLAY_ADDRESS=$(curl -s "$HOSTNAME:1635/addresses" | python -mjson.tool | grep "/ip4/" | awk "!/127.0.0.1/" | sed 's/,$//' | xargs)
+        QUEEN_UNDERLAY_ADDRESS=$(curl -s "$HOSTNAME:1633/addresses" | python -mjson.tool | grep "/ip4/" | awk "!/127.0.0.1/" | sed 's/,$//' | xargs)
         if [[ -z "$QUEEN_UNDERLAY_ADDRESS" ]] ; then
             echo "Waiting for the Queen initialization..."
             ELAPSED_TIME=$((ELAPSED_TIME+WAITING_TIME))
@@ -97,7 +97,7 @@ log_queen() {
 }
 
 count_connected_peers() {
-    COUNT=$( (curl -s "http://$HOSTNAME:1635/peers" -H "Authorization: Bearer $1" | python -c 'import json,sys; obj=json.load(sys.stdin); print (len(obj["peers"]));') || echo 0 )
+    COUNT=$( (curl -s "http://$HOSTNAME:1633/peers" -H "Authorization: Bearer $1" | python -c 'import json,sys; obj=json.load(sys.stdin); print (len(obj["peers"]));') || echo 0 )
 
     echo "$COUNT"
 }
@@ -106,7 +106,6 @@ MY_PATH=$(dirname "$0")              # relative
 MY_PATH=$( cd "$MY_PATH" && pwd )  # absolutized and normalized
 # Check used system variable set
 BEE_VERSION=$("$MY_PATH/utils/build-image-tag.sh" get)
-BEE_IMAGE_PREFIX=$("$MY_PATH/utils/env-variable-value.sh" BEE_IMAGE_PREFIX)
 BEE_ENV_PREFIX=$("$MY_PATH/utils/env-variable-value.sh" BEE_ENV_PREFIX)
 
 # Init variables
@@ -115,7 +114,6 @@ WORKERS=4
 LOG=true
 RESTRICTED=false
 RESTRICTED_PASSWORD=""
-RESTRICTED_PASSWORD_HASH=""
 QUEEN_CONTAINER_NAME="$BEE_ENV_PREFIX-queen"
 WORKER_CONTAINER_NAME="$BEE_ENV_PREFIX-worker"
 SWARM_BLOCKCHAIN_NAME="$BEE_ENV_PREFIX-blockchain"
@@ -165,12 +163,6 @@ do
         BEE_PASSWORD="${1#*=}"
         shift 1
         ;;
-        --restrict=*)
-        RESTRICTED="true"
-        RESTRICTED_PASSWORD="${1#*=}"
-        RESTRICTED_PASSWORD_HASH=$(htpasswd -bnBC 10 "" $RESTRICTED_PASSWORD | tr -d ':\n')
-        shift 1
-        ;;
         --version=*)
         BEE_VERSION="${1#*=}"
         shift 1
@@ -208,7 +200,7 @@ if [ -z "$QUEEN_CONTAINER_IN_DOCKER" ] || $EPHEMERAL ; then
     DOCKER_IMAGE="$BEE_IMAGE"
     EXTRA_QUEEN_PARAMS="-v $INIT_ROOT_DATA_DIR/$QUEEN_CONTAINER_NAME:/home/bee/.bee"
     if [ "$PORT_MAPS" -ge 1 ] ; then
-        EXTRA_QUEEN_PARAMS="$EXTRA_QUEEN_PARAMS -p 1633-1635:1633-1635"
+        EXTRA_QUEEN_PARAMS="$EXTRA_QUEEN_PARAMS -p 1633-1634:1633-1634"
     fi
 
     echo "start Bee Queen process"
@@ -223,12 +215,9 @@ if [ -z "$QUEEN_CONTAINER_IN_DOCKER" ] || $EPHEMERAL ; then
       $EXTRA_QUEEN_PARAMS \
       $DOCKER_IMAGE \
         start \
-        --admin-password="$RESTRICTED_PASSWORD_HASH" \
-        --restricted="$RESTRICTED" \
         --warmup-time=0 \
         --password "$BEE_PASSWORD" \
         --bootnode="$QUEEN_BOOTNODE" \
-        --debug-api-enable \
         --verbosity=4 \
         --mainnet=false \
         --block-time=1 \
@@ -262,8 +251,8 @@ for i in $(seq 1 1 "$WORKERS"); do
         EXTRA_WORKER_PARAMS="$EXTRA_WORKER_PARAMS -v $INIT_ROOT_DATA_DIR/$WORKER_NAME:/home/bee/.bee"
         if [ $PORT_MAPS -gt $i ] ; then
             PORT_START=$((1633+(10000*i)))
-            PORT_END=$((PORT_START + 2))
-            EXTRA_WORKER_PARAMS="$EXTRA_WORKER_PARAMS -p $PORT_START-$PORT_END:1633-1635"
+            PORT_END=$((PORT_START + 1))
+            EXTRA_WORKER_PARAMS="$EXTRA_WORKER_PARAMS -p $PORT_START-$PORT_END:1633-1634"
         fi
 
         # run docker container
@@ -279,10 +268,9 @@ for i in $(seq 1 1 "$WORKERS"); do
           --warmup-time=0 \
           --password "$BEE_PASSWORD" \
           --bootnode="$QUEEN_UNDERLAY_ADDRESS" \
-          --debug-api-enable \
           --verbosity=4 \
           --mainnet=false \
-          --block-time=1 \
+          --block-time=5 \
           --swap-enable=$SWAP \
           --swap-endpoint="http://$SWARM_BLOCKCHAIN_NAME:9545" \
           --swap-factory-address=$SWAP_FACTORY_ADDRESS \
@@ -313,7 +301,7 @@ while (( TIMEOUT > ELAPSED_TIME )) ; do
     fi;
 
     COUNT=$(count_connected_peers "$RESTRICTED_TOKEN")
-    [[ $COUNT < $WORKERS ]] || break
+    [[ $COUNT -lt $WORKERS ]] || break
     echo "Only $COUNT peers have been connected to the Queen Bee node yet. Waiting until $WORKERS"
     ELAPSED_TIME=$((ELAPSED_TIME+WAITING_TIME))
     sleep $WAITING_TIME
