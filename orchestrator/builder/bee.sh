@@ -220,7 +220,8 @@ if [ -z "$QUEEN_CONTAINER_IN_DOCKER" ] || $EPHEMERAL ; then
         --bootnode="$QUEEN_BOOTNODE" \
         --verbosity=4 \
         --mainnet=false \
-        --block-time=1 \
+        --block-time=5 \
+        --api-addr=0.0.0.0:1633 \
         --swap-enable=$SWAP \
         --swap-endpoint="http://$SWARM_BLOCKCHAIN_NAME:9545" \
         --swap-factory-address=$SWAP_FACTORY_ADDRESS \
@@ -271,6 +272,7 @@ for i in $(seq 1 1 "$WORKERS"); do
           --verbosity=4 \
           --mainnet=false \
           --block-time=5 \
+          --api-addr=0.0.0.0:1633 \
           --swap-enable=$SWAP \
           --swap-endpoint="http://$SWARM_BLOCKCHAIN_NAME:9545" \
           --swap-factory-address=$SWAP_FACTORY_ADDRESS \
