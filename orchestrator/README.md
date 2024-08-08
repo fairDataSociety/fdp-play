@@ -89,7 +89,7 @@ start the Bee cluster
 When different bee client builds need to be tested and the same data must be available in different environments,
 `environment.sh` script can be used to spin up any specific bee image.
 
-To define what is the bee image in question, change the `./scripts/utils/.commit-version-tag` to the tag that the docker image has and suffix that with `-commit`.
+To define what is the bee image in question, change the `./builder/utils/.commit-version-tag` to the tag that the docker image has and suffix that with `-commit`.
 
 Execute
 ```sh

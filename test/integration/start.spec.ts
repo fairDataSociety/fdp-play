@@ -33,7 +33,7 @@ describe('start command', () => {
   beforeAll(() => {
     docker = new Dockerode()
     bee = new Bee('http://127.0.0.1:1633')
-    beeDebug = new BeeDebug('http://127.0.0.1:1635')
+    beeDebug = new BeeDebug('http://127.0.0.1:1633')
 
     // This will force Bee Factory to create
     process.env[ENV_ENV_PREFIX_KEY] = envPrefix
