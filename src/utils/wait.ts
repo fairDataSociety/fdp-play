@@ -114,7 +114,9 @@ export async function waitForWorkers(
         return
       }
     } catch (e) {
-      if (!isAllowedError(e as FetchError)) {
+      if ((e as { message: string }).message.includes('404')) {
+        // TODO remove when https://github.com/ethersphere/bee/issues/4734 is fixed
+      } else if (!isAllowedError(e as FetchError)) {
         throw e
       }
     }
