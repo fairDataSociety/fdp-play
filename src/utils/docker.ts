@@ -519,11 +519,14 @@ export class Docker {
       'network-id': '4020',
       'full-node': 'true',
       'welcome-message': 'You have found the queen of the beehive...',
+      'api-addr': '0.0.0.0:1633',
       'cors-allowed-origins': '*',
     }
 
     if (bootnode) {
       options.bootnode = bootnode
+    } else {
+      options['bootnode-mode'] = 'true'
     }
 
     // Env variables for Bee has form of `BEE_WARMUP_TIME`, so we need to transform it.

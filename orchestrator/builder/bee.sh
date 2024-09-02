@@ -218,6 +218,7 @@ if [ -z "$QUEEN_CONTAINER_IN_DOCKER" ] || $EPHEMERAL ; then
         --warmup-time=0 \
         --password "$BEE_PASSWORD" \
         --bootnode="$QUEEN_BOOTNODE" \
+        --bootnode-mode=true \
         --verbosity=4 \
         --mainnet=false \
         --block-time=5 \
