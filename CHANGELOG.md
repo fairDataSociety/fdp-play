@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0](https://github.com/fairDataSociety/fdp-play/compare/v3.1.0...v3.2.0) (2024-09-12)
+
+
+### Features
+
+* bee 2.2 ([#147](https://github.com/fairDataSociety/fdp-play/issues/147)) ([3c91aa6](https://github.com/fairDataSociety/fdp-play/commit/3c91aa6bfb19601d382666fa87916e3882870b3b))
+
 ## [3.1.0](https://github.com/fairDataSociety/fdp-play/compare/v3.0.1...v3.1.0) (2024-06-14)
 
 
