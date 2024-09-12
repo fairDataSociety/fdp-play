@@ -240,7 +240,6 @@ export class Docker {
         ExposedPorts: {
           '1633/tcp': {},
           '1634/tcp': {},
-          '1635/tcp': {},
         },
         Tty: true,
         Cmd: ['start'],
@@ -252,7 +251,6 @@ export class Docker {
           PortBindings: {
             '1633/tcp': [{ HostPort: '1633' }],
             '1634/tcp': [{ HostPort: '1634' }],
-            '1635/tcp': [{ HostPort: '1635' }],
           },
         },
       },
@@ -287,7 +285,6 @@ export class Docker {
         ExposedPorts: {
           '1633/tcp': {},
           '1634/tcp': {},
-          '1635/tcp': {},
         },
         Cmd: ['start'],
         Env: this.createBeeEnvParameters(queenAddress),
@@ -298,7 +295,6 @@ export class Docker {
           PortBindings: {
             '1633/tcp': [{ HostPort: (1633 + workerNumber * 10000).toString() }],
             '1634/tcp': [{ HostPort: (1634 + workerNumber * 10000).toString() }],
-            '1635/tcp': [{ HostPort: (1635 + workerNumber * 10000).toString() }],
           },
         },
       },
@@ -523,11 +519,14 @@ export class Docker {
       'network-id': '4020',
       'full-node': 'true',
       'welcome-message': 'You have found the queen of the beehive...',
+      'api-addr': '0.0.0.0:1633',
       'cors-allowed-origins': '*',
     }
 
     if (bootnode) {
       options.bootnode = bootnode
+    } else {
+      options['bootnode-mode'] = 'true'
     }
 
     // Env variables for Bee has form of `BEE_WARMUP_TIME`, so we need to transform it.
@@ -544,7 +543,6 @@ export class Docker {
     const corsOrigins = '*'
     const cookieDomain = 'localhost'
     const beeApiUrl = `http://${this.queenName}:1633`
-    const beeDebugApiUrl = `http://${this.queenName}:1635`
 
     return [
       `--postageBlockId=${batchId}`,
@@ -557,7 +555,7 @@ export class Docker {
   }
 
   private async createPostageBatch(): Promise<string> {
-    const beeDebug = new BeeDebug('http://localhost:1635')
+    const beeDebug = new BeeDebug('http://localhost:1633')
 
     return beeDebug.createPostageBatch('10000000000', 21)
   }

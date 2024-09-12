@@ -16,9 +16,9 @@ PARAMETERS:
     --workers=number            all Bee nodes in the test environment. Default is 4.
     --detach                    It will not log the output of Queen node at the end of the process.
     --port-maps=number          map ports of the cluster nodes to the hosting machine in the following manner:
-                                1. 1633:1635
-                                2. 11633:11635
-                                3. 21633:21635 (...)
+                                1. 1633:1634
+                                2. 11633:11634
+                                3. 21633:21634 (...)
                                 number represents the nodes number to map from. Default is 2.
     --hostname=string           Interface to which should the nodes be bound (default 127.0.0.0).
 USAGE
