@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.1](https://github.com/fairDataSociety/fdp-play/compare/v3.2.0...v3.2.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* blockchain start from bash ([50ab1bb](https://github.com/fairDataSociety/fdp-play/commit/50ab1bba889f7d6ded8974d1a3a9484afa418ed3))
+
 ## [3.2.0](https://github.com/fairDataSociety/fdp-play/compare/v3.1.0...v3.2.0) (2024-09-12)
 
 
