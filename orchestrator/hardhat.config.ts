@@ -16,7 +16,7 @@ const config: HardhatUserConfig = {
   },
   networks: {
     fdpPlay: {
-      url: 'http://localhost:9545',
+      url: 'http://127.0.0.1:9545',
       chainId: 4020,
       gasPrice: 10000000000, //10 gwei
       accounts: ['0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d'],
