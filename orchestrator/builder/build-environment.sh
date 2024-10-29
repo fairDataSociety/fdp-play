@@ -74,7 +74,7 @@ fi
 "$MY_PATH/network.sh"
 "$MY_PATH/blockchain/init.sh"
 "$MY_PATH/blockchain/start.sh"
-SLEEP_TIME=5
+SLEEP_TIME=10
 echo "wait $SLEEP_TIME seconds for blockchain connection"
 sleep $SLEEP_TIME
 docker logs fdp-play-blockchain
