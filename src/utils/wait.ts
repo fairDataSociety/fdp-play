@@ -107,8 +107,6 @@ export async function waitForWorkers(
   }
 
   for (let i = 0; i < waitingIterations; i++) {
-    await sleep(AWAIT_SLEEP)
-
     try {
       const peers = await beeDebug.getPeers()
 
@@ -116,12 +114,14 @@ export async function waitForWorkers(
         return
       }
     } catch (e) {
-      if ((e as { message: string }).message.includes('404')) {
-        // TODO remove when https://github.com/ethersphere/bee/issues/4734 is fixed
+      if ((e as { message: string }).message.includes('503')) {
+        // expexted
       } else if (!isAllowedError(e as FetchError)) {
         throw e
       }
     }
+
+    await sleep(AWAIT_SLEEP)
   }
 
   throw new TimeoutError('Waiting for worker nodes timed-out')

@@ -260,7 +260,7 @@ export class Start extends RootCommand implements LeafCommand {
         await waitForWorkers(this.workers, docker.getAllStatus.bind(docker))
         workerSpinner.succeed('Worker nodes are up and listening')
       } catch (e) {
-        workerSpinner.fail(`Impossible to start worker nodes!`)
+        workerSpinner.fail(`Impossible to start worker nodes! ${(e as Error).message}`)
         await this.stopDocker(docker)
         throw e
       }
