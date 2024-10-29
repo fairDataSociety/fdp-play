@@ -1,7 +1,7 @@
 import { default as __fetch, FetchError } from 'node-fetch'
 import { sleep } from './index'
 import { TimeoutError } from './error'
-import { BeeDebug } from '@ethersphere/bee-js'
+import { Bee } from '@ethersphere/bee-js'
 import { AllStatus } from './docker'
 
 const AWAIT_SLEEP = 3_000
@@ -63,7 +63,7 @@ export async function waitForBlockchain(waitingIterations = 30): Promise<void> {
 }
 
 export async function waitForQueen(verifyQueenIsUp: () => Promise<boolean>, waitingIterations = 120): Promise<string> {
-  const beeDebug = new BeeDebug('http://127.0.0.1:1633')
+  const beeDebug = new Bee('http://127.0.0.1:1633')
 
   for (let i = 0; i < waitingIterations; i++) {
     try {
@@ -97,7 +97,7 @@ export async function waitForWorkers(
   getStatus: () => Promise<AllStatus>,
   waitingIterations = 120,
 ): Promise<void> {
-  const beeDebug = new BeeDebug('http://127.0.0.1:1633')
+  const beeDebug = new Bee('http://127.0.0.1:1633')
 
   const status = await getStatus()
   for (let i = 1; i <= workerCount; i++) {
@@ -107,6 +107,8 @@ export async function waitForWorkers(
   }
 
   for (let i = 0; i < waitingIterations; i++) {
+    await sleep(AWAIT_SLEEP)
+
     try {
       const peers = await beeDebug.getPeers()
 
@@ -120,8 +122,6 @@ export async function waitForWorkers(
         throw e
       }
     }
-
-    await sleep(AWAIT_SLEEP)
   }
 
   throw new TimeoutError('Waiting for worker nodes timed-out')
