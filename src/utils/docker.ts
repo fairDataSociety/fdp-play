@@ -503,7 +503,7 @@ export class Docker {
 
   private createBeeEnvParameters(bootnode?: string): string[] {
     const options: Record<string, string> = {
-      'warmup-time': '10',
+      'warmup-time': '10s',
       'debug-api-enable': 'true',
       verbosity: '4',
       'swap-enable': 'true',
@@ -526,7 +526,7 @@ export class Docker {
     if (bootnode) {
       options.bootnode = bootnode
     } else {
-      options['bootnode-mode'] = 'true'
+      options['bootnode-mode'] = 'false'
     }
 
     // Env variables for Bee has form of `BEE_WARMUP_TIME`, so we need to transform it.

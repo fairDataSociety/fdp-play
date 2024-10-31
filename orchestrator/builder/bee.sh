@@ -215,10 +215,10 @@ if [ -z "$QUEEN_CONTAINER_IN_DOCKER" ] || $EPHEMERAL ; then
       $EXTRA_QUEEN_PARAMS \
       $DOCKER_IMAGE \
         start \
-        --warmup-time=10 \
+        --warmup-time=10s \
         --password "$BEE_PASSWORD" \
         --bootnode="$QUEEN_BOOTNODE" \
-        --bootnode-mode=true \
+        --bootnode-mode=false \
         --verbosity=4 \
         --mainnet=false \
         --block-time=5 \
@@ -267,7 +267,7 @@ for i in $(seq 1 1 "$WORKERS"); do
         $EXTRA_WORKER_PARAMS \
         $DOCKER_IMAGE \
           start \
-          --warmup-time=10 \
+          --warmup-time=10s \
           --password "$BEE_PASSWORD" \
           --bootnode="$QUEEN_UNDERLAY_ADDRESS" \
           --verbosity=4 \
