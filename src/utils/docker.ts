@@ -503,7 +503,7 @@ export class Docker {
 
   private createBeeEnvParameters(bootnode?: string): string[] {
     const options: Record<string, string> = {
-      'warmup-time': '0',
+      'warmup-time': '10',
       'debug-api-enable': 'true',
       verbosity: '4',
       'swap-enable': 'true',
