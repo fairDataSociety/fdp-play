@@ -1,4 +1,4 @@
-import { BeeDebug } from '@ethersphere/bee-js'
+import { Bee } from '@ethersphere/bee-js'
 import Dockerode, { Container, ContainerCreateOptions } from 'dockerode'
 import { Logging } from '../command/root-command/logging'
 import { DEFAULT_FAIROS_IMAGE } from '../constants'
@@ -555,7 +555,7 @@ export class Docker {
   }
 
   private async createPostageBatch(): Promise<string> {
-    const beeDebug = new BeeDebug('http://localhost:1633')
+    const beeDebug = new Bee('http://localhost:1633')
 
     return beeDebug.createPostageBatch('10000000000', 21)
   }
