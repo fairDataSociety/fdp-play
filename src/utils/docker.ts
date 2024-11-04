@@ -521,6 +521,7 @@ export class Docker {
       'welcome-message': 'You have found the queen of the beehive...',
       'api-addr': '0.0.0.0:1633',
       'cors-allowed-origins': '*',
+      'allow-private-cidrs': 'true',
     }
 
     if (bootnode) {

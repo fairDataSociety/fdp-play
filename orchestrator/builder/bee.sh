@@ -219,6 +219,7 @@ if [ -z "$QUEEN_CONTAINER_IN_DOCKER" ] || $EPHEMERAL ; then
         --password "$BEE_PASSWORD" \
         --bootnode="$QUEEN_BOOTNODE" \
         --bootnode-mode=false \
+        --allow-private-cidrs=true \
         --verbosity=4 \
         --mainnet=false \
         --block-time=5 \
@@ -270,6 +271,7 @@ for i in $(seq 1 1 "$WORKERS"); do
           --warmup-time=10s \
           --password "$BEE_PASSWORD" \
           --bootnode="$QUEEN_UNDERLAY_ADDRESS" \
+          --allow-private-cidrs=true \
           --verbosity=4 \
           --mainnet=false \
           --block-time=5 \
