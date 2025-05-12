@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.3.0](https://github.com/fairDataSociety/fdp-play/compare/v3.2.0...v3.3.0) (2025-05-12)
+
+
+### Features
+
+* update contracts ([3075c60](https://github.com/fairDataSociety/fdp-play/commit/3075c6091982a11deebf2940cccf734fa48d5411))
+
+
+### Bug Fixes
+
+* add allow-private-cidrs bee configuration ([88c66fe](https://github.com/fairDataSociety/fdp-play/commit/88c66fe8b41e1dfa3318f5f1c86bff919b963839))
+* add blockchain rpc endpoint option ([#151](https://github.com/fairDataSociety/fdp-play/issues/151)) ([8a479e4](https://github.com/fairDataSociety/fdp-play/commit/8a479e4dd56bd57f7708a88e5f07175577eba639))
+* api changes for peers endpoint in bee ([142f53c](https://github.com/fairDataSociety/fdp-play/commit/142f53c2164efca827f69ff0c0db66fe1e28bc2f))
+* bee instead of beedebug with bee-js ([6e44910](https://github.com/fairDataSociety/fdp-play/commit/6e44910228f3c773ceaaf5cbcb6bd866b5db3fa3))
+* blockchain start from bash ([50ab1bb](https://github.com/fairDataSociety/fdp-play/commit/50ab1bba889f7d6ded8974d1a3a9484afa418ed3))
+* blocked connection from blocklisted peer ([e22e004](https://github.com/fairDataSociety/fdp-play/commit/e22e004ab22fc4363bc4403f3505bea4bb95832f))
+* **hardhat:** fdpPlay with ipv4 url ([4560984](https://github.com/fairDataSociety/fdp-play/commit/4560984813cccab008272b6f6ee410ca3c7ad3e1))
+* set bootnode false and warmup time ([1c96887](https://github.com/fairDataSociety/fdp-play/commit/1c968875d2365ce3358f9d6257ee6c9519520796))
+
 ## [3.2.0](https://github.com/fairDataSociety/fdp-play/compare/v3.1.0...v3.2.0) (2024-09-12)
 
 
