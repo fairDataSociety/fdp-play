@@ -4,7 +4,7 @@ import crypto from 'crypto'
 
 import { run } from '../utils/run'
 import { ENV_ENV_PREFIX_KEY } from '../../src/constants'
-import { Bee, BeeDebug, Reference } from '@ethersphere/bee-js'
+import { Bee, Reference } from '@ethersphere/bee-js'
 import { DockerError } from '../../src/utils/docker'
 import { findContainer, waitForUsablePostageStamp } from '../utils/docker'
 
@@ -27,13 +27,13 @@ async function stopNodes() {
 
 describe('start command', () => {
   let docker: Dockerode
-  let bee: Bee, beeDebug: BeeDebug
+  let bee: Bee, beeDebug: Bee
   const envPrefix = `fdp-play-test-${crypto.randomBytes(4).toString('hex')}`
 
   beforeAll(() => {
     docker = new Dockerode()
     bee = new Bee('http://127.0.0.1:1633')
-    beeDebug = new BeeDebug('http://127.0.0.1:1633')
+    beeDebug = new Bee('http://127.0.0.1:1633')
 
     // This will force Bee Factory to create
     process.env[ENV_ENV_PREFIX_KEY] = envPrefix
@@ -161,7 +161,7 @@ describe('start command', () => {
       await run(['start', '--detach'])
 
       console.log('(before) Creating postage stamp ')
-      const postage = await beeDebug.createPostageBatch('10', 18)
+      const postage = await beeDebug.createPostageBatch('414720000', 18)
 
       console.log('(before) Waiting for the postage stamp to be usable')
       await waitForUsablePostageStamp(beeDebug, postage)
