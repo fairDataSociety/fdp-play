@@ -161,7 +161,7 @@ describe('start command', () => {
       await run(['start', '--detach'])
 
       console.log('(before) Creating postage stamp ')
-      const postage = await beeDebug.createPostageBatch('10', 18)
+      const postage = await beeDebug.createPostageBatch('414720000', 18)
 
       console.log('(before) Waiting for the postage stamp to be usable')
       await waitForUsablePostageStamp(beeDebug, postage)
