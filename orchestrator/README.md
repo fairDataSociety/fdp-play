@@ -91,6 +91,12 @@ When different bee client builds need to be tested and the same data must be ava
 
 To define what is the bee image in question, change the `./builder/utils/.commit-version-tag` to the tag that the docker image has and suffix that with `-commit`.
 
+The bee data is binded to the `./builder/bee-data-dirs` folder so it requires the right permission to be able to write to it. To do that, run
+
+```sh
+sudo chown -R 999 builder/bee-data-dirs/
+```
+
 Execute
 ```sh
 export COMMIT_VERSION_TAG=true && export BUILD_IMAGE=true && ./builder/environment.sh start

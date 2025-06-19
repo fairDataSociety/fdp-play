@@ -225,7 +225,6 @@ if [ -z "$QUEEN_CONTAINER_IN_DOCKER" ] || $EPHEMERAL ; then
         --block-time=5 \
         --api-addr=0.0.0.0:1633 \
         --swap-enable=$SWAP \
-        --swap-endpoint="http://$SWARM_BLOCKCHAIN_NAME:9545" \
         --blockchain-rpc-endpoint="http://$SWARM_BLOCKCHAIN_NAME:9545" \
         --swap-factory-address=$SWAP_FACTORY_ADDRESS \
         --postage-stamp-address=$POSTAGE_STAMP_ADDRESS \
@@ -278,7 +277,6 @@ for i in $(seq 1 1 "$WORKERS"); do
           --block-time=5 \
           --api-addr=0.0.0.0:1633 \
           --swap-enable=$SWAP \
-          --swap-endpoint="http://$SWARM_BLOCKCHAIN_NAME:9545" \
           --blockchain-rpc-endpoint="http://$SWARM_BLOCKCHAIN_NAME:9545" \
           --swap-factory-address=$SWAP_FACTORY_ADDRESS \
           --postage-stamp-address=$POSTAGE_STAMP_ADDRESS \
