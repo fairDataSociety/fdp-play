@@ -123,6 +123,17 @@ Private Keys
 Additionally, the miner account - its wallet is in the [geth data folder](orchestrator/builder/blockchain/.ethereum) -
 is also founded with 1000 ETH. Its address is `0xCEeE442a149784faa65C35e328CCd64d874F9a02`.
 
+### Bee Node Keys
+
+The bee node keys are stored in the [bee-data-dirs](orchestrator/builder/bee-data-dirs) folder. Their private keys are the following:
+```
+fdp-play-queen: 566058308ad5fa3888173c741a1fb902c9f1f19559b11fc2738dfc53637ce4e9
+fdp-play-worker-1: 195cf6324303f6941ad119d0a1d2e862d810078e1370b8d205552a543ff40aab
+fdp-play-worker-2: fd212ce5d23adbd3738fa5e34e57e538ace57c628bacb6b25630732582dfd495
+fdp-play-worker-3: 91700026709ddaddb282c07a0eff0295be8a44f2d92449068936b6d87db1a12e
+fdp-play-worker-4: cfb3f14067e2146a72c31f903dc3944a7ec25ecb84d9e688d6ec40a7570dfe8b
+```
+
 With the geth wallet any sort of action can be performed since it is unlocked and all API services are open.
 
 ### Docker Images
