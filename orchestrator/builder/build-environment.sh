@@ -32,7 +32,6 @@ build_bee() {
     # Build bee and make docker image
     export BEE_VERSION=${COMMIT_HASH::7}-commit
     export REACHABILITY_OVERRIDE_PUBLIC=true
-    make binary REACHABILITY_OVERRIDE_PUBLIC=$REACHABILITY_OVERRIDE_PUBLIC
     echo "Bee image will be built with version: $BEE_VERSION"
     docker build . -t ethersphere/bee:$BEE_VERSION --build-arg REACHABILITY_OVERRIDE_PUBLIC=$REACHABILITY_OVERRIDE_PUBLIC
     cd "$MY_PATH" || exit 1
