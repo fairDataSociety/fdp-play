@@ -33,7 +33,10 @@ build_bee() {
     export BEE_VERSION=${COMMIT_HASH::7}-commit
     export REACHABILITY_OVERRIDE_PUBLIC=true
     echo "Bee image will be built with version: $BEE_VERSION"
-    docker build . -t ethersphere/bee:$BEE_VERSION --build-arg REACHABILITY_OVERRIDE_PUBLIC=$REACHABILITY_OVERRIDE_PUBLIC
+    docker build . \
+        --tag ethersphere/bee:$BEE_VERSION \
+        --build-arg REACHABILITY_OVERRIDE_PUBLIC=$REACHABILITY_OVERRIDE_PUBLIC \
+        --file Dockerfile.dev
     cd "$MY_PATH" || exit 1
     # Set build image tag so that other terminal session can retrieve
     "$MY_PATH/utils/build-image-tag.sh" set "$BEE_VERSION"
