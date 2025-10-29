@@ -8,6 +8,7 @@ usage() {
 USAGE:
     $ build-environment.sh [PARAMETERS]
 PARAMETERS:
+    --bee-repository                          Custom repository for bee images; Default: ethersphere/bee.git
     --build-base-bee                          The base bee image will be built from source code
     --base-bee-commit-hash=string             the source code commit hash of the base bee; Default: HEAD; Dependency: --build-base-bee
 USAGE
@@ -26,7 +27,7 @@ build_bee() {
     fi
     mkdir "$BEE_SOURCE_PATH" && cd "$BEE_SOURCE_PATH" || exit 1
     git init
-    git remote add origin https://github.com/ethersphere/bee.git
+    git remote add origin https://github.com/$BEE_REPOSITORY
     git fetch origin --depth=1 "$COMMIT_HASH"
     git reset --hard FETCH_HEAD
     # Build bee and make docker image
@@ -43,6 +44,7 @@ MY_PATH=$(dirname "$0")
 MY_PATH=$( cd "$MY_PATH" && pwd )
 COMMIT_HASH=HEAD
 BUILD_BASE_BEE=false
+BEE_REPOSITORY=ethersphere/bee.git
 # Bee version here means the base bee version on which the images will be built
 BEE_VERSION=$("$MY_PATH/utils/env-variable-value.sh" BEE_VERSION)
 
@@ -56,6 +58,10 @@ do
         ;;
         --base-bee-commit-hash=*)
         COMMIT_HASH="${1#*=}"
+        shift 1
+        ;;
+        --bee-repository=*)
+        BEE_REPOSITORY="${1#*=}"
         shift 1
         ;;
         *)
