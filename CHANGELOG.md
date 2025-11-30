@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.4.0](https://github.com/fairDataSociety/fdp-play/compare/v3.3.0...v3.4.0) (2025-11-30)
+
+
+### Features
+
+* add option to customize repository ([887a426](https://github.com/fairDataSociety/fdp-play/commit/887a4263bced220d70e5fd5e34ce1f1468a83f92))
+* changed contract bytecodes (bee 2.6) ([#153](https://github.com/fairDataSociety/fdp-play/issues/153)) ([a9c6860](https://github.com/fairDataSociety/fdp-play/commit/a9c68607be6edb0d8bdb6edd2e5d81d7b539ca70))
+* swap-endpoint is removed ([aabefa8](https://github.com/fairDataSociety/fdp-play/commit/aabefa8e640fed035b555873aa02efe27a06fa11))
+
 ## [3.3.0](https://github.com/fairDataSociety/fdp-play/compare/v3.2.0...v3.3.0) (2025-05-12)
 
 
